@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+.benefits-section {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    padding: 60px 20px; 
+    background-color: #ffffff; 
+}
+
+/* Título de la sección */
+.benefits-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #000000;
+    margin-bottom: 20px; 
+}
+
+/* Contenedor principal de beneficios */
+.benefits-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    gap: 0px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilos para los iconos */
+.icon-wrapper {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; 
+}
+
+/* Colores para cada icono */
+.benefit-item:nth-child(1) .icon-wrapper {
+    color: #22BB33; 
+}
+
+.benefit-item:nth-child(2) .icon-wrapper {
+    color: #F0AD4E; 
+}
+
+.benefit-item:nth-child(3) .icon-wrapper {
+    color: #16394F; 
+}
+
+/* Estilos de texto */
+.benefit-item h3 {
+    font-size: 1rem; 
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.benefit-item p {
+    color: #000000; 
+    font-size: .9rem;
+    margin: 0;
+}
+
+/* Cada item de beneficio */
+.benefit-item {
+    flex-basis: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0px;
+    padding: 10px 20px; 
+    width: 100%; 
+}
+
+/* Contenedor del contenido con líneas laterales */
+.benefit-content-wrapper {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    max-width: 600px; 
+    min-height: 180px; 
+    margin: 0 auto;
+    padding: 10px 120px;
+    position: relative; 
+    z-index: 2; 
+    background-color: transparent; 
+    text-align: center;
+    width: 100%; 
+}
+
+/* Líneas verticales a los lados */
+.benefit-content-wrapper::before,
+.benefit-content-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 10px; 
+    height: 160px; 
+    width: 4px;
+    z-index: 1;
+}
+
+/* Posición de las líneas */
+.benefit-content-wrapper::before {
+    left: 0; /* Línea izquierda */
+}
+
+.benefit-content-wrapper::after {
+    right: 0; /* Línea derecha */
+}
+
+/* Colores de las líneas para cada beneficio */
+.benefit-item:nth-child(1) .benefit-content-wrapper::before,
+.benefit-item:nth-child(1) .benefit-content-wrapper::after {
+    background-color: #22BB33; 
+}
+
+.benefit-item:nth-child(2) .benefit-content-wrapper::before,
+.benefit-item:nth-child(2) .benefit-content-wrapper::after {
+    background-color: #F0AD4E; 
+}
+
+.benefit-item:nth-child(3) .benefit-content-wrapper::before,
+.benefit-item:nth-child(3) .benefit-content-wrapper::after {
+    background-color: #16394F; 
+}

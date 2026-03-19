@@ -1,0 +1,253 @@
+/* --- ESTILOS DE LA SECCIÓN DE TARJETAS --- */
+.pricing-section {
+    padding: 60px 20px;
+    text-align: center;
+    font-family: 'Nunito Sans', sans-serif;
+    background-color: white;
+}
+ 
+.pricing-title {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #333;
+}
+ 
+.pricing-subtitle {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+ 
+/* --- Contenedor de Tarjetas --- */
+.pricing-cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: stretch;
+    flex-wrap: wrap; /* Para responsividad */
+}
+ 
+/* --- Estilos Base de Cada Tarjeta --- */
+.pricing-card {
+    flex: 1 1 300px;
+    border-radius: 15px;
+    background-color: white;
+    border: 2px solid #0d2644;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+ 
+/* --- Nuevos estilos para la estructura interna --- */
+.card-header {
+    font-size: 24px;
+    font-weight: 800;
+    padding: 30px 30px 10px 30px;
+    text-align: left;
+    color: #333;
+}
+ 
+.card-separator {
+    width: calc(100% - 60px);
+    height: 2px;
+    background-color: #0d2644;
+    margin: 0 30px 15px 30px;
+}
+ 
+.card-price {
+    font-size: 30px;
+    font-weight: 700;
+    color: #333;
+    padding: 10px 30px 30px 30px;
+    text-align: center;
+}
+ 
+.card-features {
+    list-style: none;
+    padding: 0 30px;
+    margin: 0;
+    flex-grow: 1;
+}
+ 
+/* Estilos aplicados al <li>  */
+.card-features li {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-align: left;
+    line-height: 1.4;
+    color: #555;
+}
+ 
+/* Estilos aplicados al <svg> */
+.card-features li svg {
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+ 
+/* --- Nuevos estilos para el Botón --- */
+.card-button {
+    display: block;
+    width: calc(100% - 60px);
+    padding: 15px 20px;
+    margin: 30px 30px 30px 30px;
+    background-color: #0d2644;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+ 
+.card-button:hover {
+    background-color: #1a3a5e;
+}
+ 
+ 
+ 
+/* --- HOVER  --- */
+.pricing-card:hover {
+    background-color: #E1E8ED;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+}
+ 
+/* --- Adaptación Responsiva --- */
+@media (max-width: 992px) {
+    .pricing-cards-container {
+        flex-wrap: wrap;
+    }
+    .pricing-card {
+        flex: 1 1 45%;
+    }
+}
+ 
+@media (max-width: 600px) {
+    .pricing-card {
+        flex: 1 1 100%;
+    }
+}
+ 
+/* --- ESTILOS DE LA TABLA DE COMPARACIÓN --- */
+ 
+.comparison-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+ 
+.comparison-section {
+    padding: 60px 20px;
+    margin-top: 150px;
+    text-align: center;
+    font-family: 'Nunito Sans', sans-serif;
+    background-color: white;
+}
+ 
+.comparison-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 40px;
+    color: #333;
+}
+ 
+/* --- ESTRUCTURA DEL GRID (4 COLUMNAS IGUALES) --- */
+.plan-header-row, .comparison-feature-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    text-align: center;
+}
+ 
+.plan-header-row {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+ 
+.plan-column {
+    padding: 0 10px;
+    position: relative;
+    z-index: 10;
+    background-color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+ 
+.plan-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #333;
+}
+ 
+/* SE ELIMINÓ .plan-column.featured */
+ 
+.characteristics-label {
+    text-align: left;
+    padding-left: 10px;
+}
+ 
+.characteristics-plan-name {
+    text-align: left;
+}
+ 
+.plan-tagline {
+    font-size: 14px;
+    color: #888;
+    min-height: 40px;
+    margin-bottom: 15px;
+}
+ 
+.plan-button {
+    background-color: #0b2f4a;
+    color: white;
+}
+ 
+/* --- CUERPO DE LA TABLA --- */
+.comparison-body-rows {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 30px;
+}
+ 
+.comparison-feature-row {
+    border-top: 1px solid #f0f0f0;
+    padding: 15px 0;
+}
+ 
+.feature-label {
+    text-align: left;
+    color: #333;
+    font-size: 15px;
+    font-weight: 600;
+    padding-left: 10px;
+}
+ 
+.plan-check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ 
+/* Responsive Tabla */
+@media (max-width: 768px) {
+    .plan-header-row, .comparison-feature-row {
+        grid-template-columns: 150px repeat(3, 1fr);
+        overflow-x: auto;
+    }
+}

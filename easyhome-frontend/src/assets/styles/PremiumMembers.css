@@ -1,0 +1,94 @@
+/* --- CONTENEDOR PRINCIPAL (SIDEBAR DERECHO) --- */
+.premium-sidebar {
+    width: 250px; /* Ancho fijo para el sidebar */
+    padding: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    align-self: flex-start; /* Se alinea a la parte superior del contenedor flex */
+    text-align: right;
+    margin-top: 50px;
+}
+
+/* --- TÍTULO --- */
+.premium-sidebar-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #000;
+    margin: 0 0 15px 0;
+    text-align: right;
+}
+
+/* --- LISTA DE MIEMBROS --- */
+.premium-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre cada tarjeta de miembro */
+}
+
+/* --- TARJETA DE CADA MIEMBRO --- */
+.miembro-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border: 1px solid #F0AD4E; /* Borde naranja/amarillo suave */
+    border-radius: 8px;
+    background-color: #ffffff; /* Fondo muy claro */
+}
+
+/* --- AVATAR --- */
+.miembro-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0; /* Para que la imagen no se encoja */
+}
+
+/* --- INFORMACIÓN DE TEXTO --- */
+.miembro-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    max-width: 75%; /* Limita el ancho para evitar desbordes */
+    margin-top: 0;
+    text-align: right;
+}
+
+.miembro-name {
+    font-size: 1em;
+    font-weight: 700;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: normal; /* Corta si es demasiado largo */
+    word-break: break-word;
+    margin: 0;
+    padding: 0;
+    line-height: 1.1;
+}
+
+.miembro-membership {
+    font-size: 0.7em;
+    color: #555;
+    white-space: nowrap;
+    margin: 0;
+    line-height: 1.1;
+
+}
+
+/* --- RATING --- */
+.miembro-rating {
+    display: flex;
+    align-items: center;
+    font-size: 0.8em;
+    color: #555;
+    margin-top: 2px;
+    justify-content: flex-end;
+}
+
+.rating-star {
+    color: #F0AD4E; /* Estrella amarilla */
+    margin-right: 0;
+    margin-left: 3px;
+    font-size: 0.9em;
+}

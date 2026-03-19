@@ -1,0 +1,161 @@
+/* ============================================
+   GUÍAS DE ESTILO - EasyHome
+   ============================================ */
+
+/* Importar fuentes de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+:root {
+  /* === FUENTES === */
+  --font-titles: 'Poppins', sans-serif;
+  --font-text: 'Nunito Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  
+  /* === TAMAÑOS DE FUENTE === */
+  /* Títulos */
+  --font-size-h1: 35.84pt;      /* 47.79px */
+  --font-size-h2: 29.86pt;      /* 39.81px */
+  --font-size-h3: 24.89pt;      /* 33.19px */
+  --font-size-h4: 20.74pt;      /* 27.65px */
+  --font-size-h5: 17.28pt;      /* 23.04px */
+  --font-size-h6: 14.4pt;       /* 19.2px */
+  
+  /* Texto regular */
+  --font-size-base: 1rem;       /* 16px */
+  --font-size-small: 0.875rem;  /* 14px */
+  --font-size-xs: 0.75rem;      /* 12px */
+  
+  /* === PALETA DE COLORES === */
+  /* Colores primarios/neutros */
+  --color-primary: #16394F;     /* Azul oscuro */
+  --color-secondary: #FFB74D;   /* Café/marrón */
+  --color-tertiary: #455A64;    /* Azul grisáceo */
+  
+  /* Colores de fondo y neutros */
+  --color-bg-light: #FFF8E1;    /* Beige muy claro */
+  --color-bg-medium: #66BB6A;   /* Gris rosado */
+  --color-bg-soft: #BCAAA4;     /* Beige */
+  
+  /* Colores de estado */
+  --color-black: #000000;
+  --color-error: #BB2124;       /* Rojo */
+  --color-success: #22BB33;     /* Verde */
+  --color-warning: #F0AD4E;     /* Naranja/amarillo */
+  --color-white: #FFFFFF;
+  
+  /* === CONFIGURACIÓN BASE === */
+  font-family: var(--font-text);
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: var(--color-white);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  font-family: var(--font-titles);
+  font-size: var(--font-size-h1);
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+h2 {
+  font-family: var(--font-titles);
+  font-size: var(--font-size-h2);
+  font-weight: 600;
+}
+
+h3 {
+  font-family: var(--font-titles);
+  font-size: var(--font-size-h3);
+  font-weight: 600;
+}
+
+h4 {
+  font-family: var(--font-titles);
+  font-size: var(--font-size-h4);
+  font-weight: 500;
+}
+
+h5 {
+  font-family: var(--font-titles);
+  font-size: var(--font-size-h5);
+  font-weight: 500;
+}
+
+h6 {
+  font-family: var(--font-titles);
+  font-size: var(--font-size-h6);
+  font-weight: 500;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  border-color: #646cff;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  
+  a:hover {
+    color: #747bff;
+  }
+  
+  button {
+    background-color: #f9f9f9;
+  }
+}

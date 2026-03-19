@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Nunito+Sans:wght@400;600;700&display=swap');
+
+.categories-section {
+  padding: 80px 20px;
+  background-color: #ffffff;
+}
+
+.categories-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.categories-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: #16394F;
+  margin-bottom: 60px;
+}
+
+.categories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 50px 0;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Categoría con icono a la izquierda (índice par) */
+.category-left-icon {
+  border-left: 4px solid var(--color-warning);
+  padding-left: 60px;
+}
+
+.category-left-icon .category-icon-wrapper {
+  order: 1;
+}
+
+.category-left-icon .category-content {
+  order: 2;
+  text-align: left;
+}
+
+/* Categoría con icono a la derecha (índice impar) */
+.category-right-icon {
+  border-right: 4px solid var(--color-error);
+  padding-right: 60px;
+  flex-direction: row-reverse;
+}
+
+.category-right-icon .category-icon-wrapper {
+  order: 2;
+}
+
+.category-right-icon .category-content {
+  order: 1;
+  text-align: right;
+}
+
+.category-item:hover .category-icon {
+  transform: scale(1.05);
+}
+
+.category-icon-wrapper {
+  flex-shrink: 0;
+}
+
+.category-icon {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.category-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.category-icon-placeholder {
+  background-color: #f5f5f5;
+  border-radius: 50%;
+}
+
+.category-icon-placeholder span {
+  font-size: 3rem;
+}
+
+.category-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+.category-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #16394F;
+  margin: 0 0 10px 0;
+}
+
+.category-description {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 15px 0;
+}
+
+.category-link {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  display: inline-block;
+}
+
+.category-link:hover {
+  color: var(--color-tertiary);
+  text-decoration: underline;
+}
+
+.categories-loading,
+.categories-error {
+  text-align: center;
+  padding: 40px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.2rem;
+}
+
+.categories-error {
+  color: #d32f2f;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .categories-title {
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+
+  .category-item {
+    gap: 25px;
+    padding: 35px 0;
+  }
+
+  .category-left-icon {
+    padding-left: 40px;
+  }
+
+  .category-right-icon {
+    padding-right: 40px;
+  }
+
+  .category-icon {
+    width: 80px;
+    height: 80px;
+  }
+
+  .category-name {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .categories-section {
+    padding: 60px 15px;
+  }
+
+  /* En móvil, todas las categorías se alinean igual (icono izquierda) */
+  .category-item,
+  .category-right-icon {
+    flex-direction: row;
+    border-left: 4px solid #FFB74D;
+    border-right: none;
+    padding: 30px 0 30px 30px;
+    padding-right: 15px;
+    gap: 20px;
+  }
+
+  .category-left-icon .category-icon-wrapper,
+  .category-right-icon .category-icon-wrapper {
+    order: 1;
+  }
+
+  .category-left-icon .category-content,
+  .category-right-icon .category-content {
+    order: 2;
+    text-align: left;
+  }
+
+  .category-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .category-name {
+    font-size: 1.2rem;
+  }
+
+  .category-description {
+    font-size: 0.95rem;
+  }
+}
+

@@ -1,0 +1,81 @@
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: var(--font-size-small);
+  font-family: var(--font-text);
+  text-align: left;
+}
+
+.required {
+  color: var(--color-error);
+  margin-left: 4px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #d1d5db;
+  border-radius: 12px;
+  font-size: var(--font-size-normal);
+  color: var(--color-text);
+  background-color: #ffffff !important;
+  font-family: var(--font-text);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Forzar fondo blanco en autocomplete */
+.form-input:-webkit-autofill,
+.form-input:-webkit-autofill:hover,
+.form-input:-webkit-autofill:focus,
+.form-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: var(--color-text) !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  background-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(22, 57, 79, 0.1);
+  background-color: #ffffff !important;
+}
+
+.form-input:hover:not(:focus) {
+  border-color: #9ca3af;
+  background-color: #ffffff !important;
+}
+
+.form-input::placeholder {
+  color: #9ca3af;
+  font-size: var(--font-size-normal);
+}
+
+.form-input.error {
+  border-color: var(--color-error);
+}
+
+.form-input.error:focus {
+  box-shadow: 0 0 0 3px rgba(187, 33, 36, 0.2);
+}
+
+.error-message {
+  margin-top: 6px;
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+  font-family: var(--font-text);
+}
+
+.help-text {
+  margin-top: 6px;
+  font-size: var(--font-size-xs);
+  color: var(--color-white);
+  font-family: var(--font-text);
+}

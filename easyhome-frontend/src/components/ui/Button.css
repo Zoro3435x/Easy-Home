@@ -1,0 +1,141 @@
+/* Estilos base del botón */
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  
+  font-family: inherit;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.ui-button:focus {
+  outline: 2px solid #4a90e2;
+  outline-offset: 2px;
+}
+
+/* Tamaños */
+.ui-button--small {
+  padding: 6px 16px;
+  font-size: 14px;
+}
+
+.ui-button--medium {
+  padding: 10px 25px;
+  font-size: 16px;
+}
+
+.ui-button--large {
+  padding: 14px 32px;
+  font-size: 18px;
+}
+
+/* Ancho completo */
+.ui-button--full-width {
+  width: 100%;
+}
+
+/* Variantes de color */
+
+/* Primary - Azul oscuro (como el botón "Postúlate") */
+.ui-button--primary {
+  background-color: #0b2f4a;
+  color: white;
+}
+
+.ui-button--primary:hover:not(:disabled) {
+  background-color: #083145;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(11, 47, 74, 0.3);
+}
+
+.ui-button--primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(11, 47, 74, 0.3);
+}
+
+/* Secondary - Gris */
+.ui-button--secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.ui-button--secondary:hover:not(:disabled) {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
+
+/* Success - Verde */
+.ui-button--success {
+  background-color: #28a745;
+  color: white;
+}
+
+.ui-button--success:hover:not(:disabled) {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+/* Danger - Rojo */
+.ui-button--danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.ui-button--danger:hover:not(:disabled) {
+  background-color: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* Outline - Borde con fondo transparente */
+.ui-button--outline {
+  background-color: transparent;
+  color: #0b2f4a;
+  border: 2px solid #0b2f4a;
+}
+
+.ui-button--outline:hover:not(:disabled) {
+  background-color: #0b2f4a;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(11, 47, 74, 0.2);
+}
+
+/* Estado deshabilitado */
+.ui-button--disabled,
+.ui-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ui-button--large {
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+  
+  .ui-button--medium {
+    padding: 8px 20px;
+    font-size: 15px;
+  }
+  
+  .ui-button--small {
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+}

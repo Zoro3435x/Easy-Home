@@ -1,0 +1,311 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+ 
+:root {
+    --primary-color: #16394f;
+    --border-color: #D3D3D3;
+    --text-color: #333;
+    --placeholder-color: #9d9d9d;
+    --background-light: #f9f9f9;
+}
+ 
+.form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    font-family: Nunito Sans, sans-serif;
+}
+ 
+.form-title {
+    text-align: center;
+    font-size: 25px;
+    font-family: Poppins, sans-serif;
+    margin-bottom: 30px;
+    color: var(--text-color);
+}
+ 
+.form-group {
+    margin-bottom: 25px;
+   
+}
+ 
+.required-star {
+    color: red;
+    margin-left: 3px;
+    font-weight: bold;
+}
+ 
+label[for]:not([for="fotos"]) {
+  background: var(--blanco, #ffffff);
+  border-radius: 5px 0px 0px 5px;
+  border-style: solid;
+  border-color: var(--azul-marino, #16394f);
+  border-width: 0px 0px 0px 3px;
+  display: block;
+  text-align: left;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  position: relative;
+  font-size: 17px;
+  margin-bottom: 18px;
+}
+ 
+.form-container .form-group input[type="text"],
+.form-container .form-group input[type="number"],
+.form-container .form-group select,
+.form-container .form-group textarea {
+    outline: none;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #9d9d9d;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1em;
+    color: #000000;
+    background-color: white;
+}
+ 
+.form-container .form-group select:valid {
+  color: #000000;
+}
+ 
+.custom-select-wrapper {
+    position: relative;
+    display: block;
+}
+ 
+.custom-select-wrapper select {
+    /* Ocultar la flecha nativa */
+    -webkit-appearance: none;
+    -moz-appearance: none;    
+    appearance: none;        
+   
+    padding-right: 30px;
+    width: 100%;
+}
+ 
+.select-icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+ 
+.select-icon svg {
+    width: 12px;
+    height: 12px;
+    display: block;
+}
+ 
+ 
+#categoria {
+    color: var(--placeholder-color);
+    font-family: 'Nunito Sans', sans-serif;
+}
+#categoria option {
+    color: var(--text-color);
+    font-family: 'Nunito Sans', sans-serif;
+}
+ 
+#categoria:valid {
+  color: #000000;
+}
+/* Estilo para el placeholder */
+::placeholder {
+    color: var(--placeholder-color);
+    opacity: 1;
+}
+:-ms-input-placeholder {
+    color: var(--placeholder-color);
+}
+::-ms-input-placeholder {
+    color: var(--placeholder-color);
+}
+ 
+/* --- Estilos de la seccion para subir fotos --- */
+.file-upload-box {
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    background-color: var(--background-light);
+    cursor: pointer;
+    text-align: center;
+   
+    display: flex;
+    align-items: center;      
+    justify-content: center;
+ 
+    min-height: 180px;
+    width: 100%;              
+    box-sizing: border-box;
+}
+ 
+.file-upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;      
+    justify-content: center;  
+    gap: 10px;                
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+ 
+.file-upload-label svg {
+    width: 40px;
+    height: 40px;
+    fill: #a3a3a3;
+    margin: 0 auto;            
+    display: block;
+    transition: fill 0.3s ease;
+}
+ 
+.file-upload-box p {
+    margin: 5px 0 5px 0;
+    font-size: 15px;
+    text-align: center;
+    color: var(--text-color);
+}
+ 
+.file-upload-box small {
+    display: block;
+    color: var(--placeholder-color);
+    text-align: center;
+}
+ 
+.upload-icon {
+    display: block;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+ 
+/* Contenedor de previews */
+.photo-previews-container {
+    margin-top: 15px;
+}
+ 
+.photo-previews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+}
+ 
+/* Card de cada foto */
+.photo-preview-card {
+    position: relative;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+ 
+.photo-preview-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+ 
+/* Imagen preview */
+.photo-preview-image {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+}
+ 
+/* Info de la foto */
+.photo-preview-info {
+    padding: 8px;
+    font-size: 12px;
+    color: #333;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+}
+ 
+.photo-preview-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+ 
+.photo-preview-size {
+    font-size: 11px;
+    color: #666;
+    margin-top: 3px;
+}
+ 
+/* Botón eliminar */
+.photo-preview-delete {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #d32f2f;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s, transform 0.2s;
+}
+ 
+.photo-preview-delete:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
+ 
+.photo-preview-delete:active {
+    transform: scale(0.95);
+}
+ 
+/* --- Estilos del Rango de Precio --- */
+.price-range {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+ 
+.price-input {
+    flex-grow: 1;
+    width: auto;
+    text-align: center;
+}
+ 
+.separator {
+    background-color: var(--primary-color);
+    height: 4px;
+    width: 20%;
+    margin: 30px 0;
+    border-radius: 1px;
+}
+ 
+/* --- Estilo del Botón --- */
+.submit-button {
+    background-color: #16394F;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    width: 60%;
+}
+ 
+.submit-button:hover {
+    background-color: #2a4966;
+}

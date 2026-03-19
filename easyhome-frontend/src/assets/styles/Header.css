@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+.app-header {
+  background-color: var(--color-primary); 
+  padding: 15px 0; 
+  color: white; 
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Coloca los elementos a los extremos */
+  align-items: center; 
+  max-width: 1200px; /* Ancho máximo para el contenido*/
+  margin: 0 auto; 
+  padding: 0 20px; /* Espaciado interno horizontal */
+}
+
+.home-link {
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: inherit; /* Hereda el color blanco */
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.home-link:hover {
+  text-decoration: underline; /* Efecto al pasar el mouse */
+  color: white;
+}
+
+.icon-home {
+  font-size: 24px; /* Ajusta el tamaño del icono */
+}
+
+.nav-right {
+  list-style: none; 
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 30px; 
+}
+
+.nav-right li a {
+  text-decoration: none;
+  color: inherit; 
+  font-size: 16px;
+  font-family: 'Nunito Sans', sans-serif; 
+}
+
+.nav-right li a:hover {
+  text-decoration: underline; /* Efecto al pasar el mouse */
+}

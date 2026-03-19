@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+.app-footer {
+  margin-top: 3rem;
+  padding: 2rem 0;
+  background: #16394F;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+}
+
+.contenido-footer {
+  display: flex; 
+  justify-content: center; 
+  gap: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  color: #ffffff;
+  padding-left: 5%;
+  
+.contacto,
+.servicios,
+.mi-cuenta {
+    flex-basis: 160px;
+    margin-bottom: 30px; 
+    text-align: left; 
+    list-style: none; 
+    text-decoration: none;
+    color: inherit; 
+  }
+}
+
+.contenido-footer a:link,
+.contenido-footer a:visited {
+    color: #ffffff; 
+}
+
+/* Efecto al pasar el mouse */
+.contenido-footer a:hover {
+    color: #cccccc; 
+}
+
+
+.contenido-footer h3 {
+  margin-bottom: 10px;
+  font-size: 18px; 
+  font-weight: 700;
+}
+
+.contenido-footer ul {
+  list-style-type: none; 
+  padding: 0; 
+  margin: 0; 
+}
+
+.copyright {
+  color: #ffffff;
+  
+}
+

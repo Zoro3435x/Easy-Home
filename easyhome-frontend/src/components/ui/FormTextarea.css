@@ -1,0 +1,71 @@
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: var(--font-size-small);
+  font-family: var(--font-text);
+  text-align: left;
+}
+
+.required {
+  color: var(--color-error);
+  margin-left: 4px;
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--color-tertiary);
+  border-radius: 8px;
+  font-size: var(--font-size-small);
+  color: var(--color-primary);
+  background-color: var(--color-white);
+  font-family: var(--font-text);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.form-textarea:hover {
+  border-color: var(--color-primary);
+}
+
+.form-textarea::placeholder {
+  color: var(--color-tertiary);
+  opacity: 0.7;
+}
+
+.textarea-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  gap: 10px;
+}
+
+.help-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-tertiary);
+  font-family: var(--font-text);
+  margin: 0;
+  flex: 1;
+}
+
+.char-count {
+  font-size: var(--font-size-xs);
+  color: var(--color-tertiary);
+  font-family: var(--font-text);
+  margin: 0;
+  white-space: nowrap;
+  opacity: 0.8;
+}

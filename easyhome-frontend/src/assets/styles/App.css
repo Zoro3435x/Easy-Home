@@ -1,0 +1,109 @@
+/* ============================================
+   APP.CSS - Layout Global y Utilidades
+   ============================================ */
+
+/* --- Layout Principal --- */
+.app-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  padding: 0;
+}
+
+/* --- Contenedores Reutilizables --- */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.container-sm {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* --- Utilidades de Tipografía --- */
+.font-titles {
+  font-family: var(--font-titles);
+}
+
+.font-text {
+  font-family: var(--font-text);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* --- Utilidades de Color de Texto --- */
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-secondary); }
+.text-success { color: var(--color-success); }
+.text-error { color: var(--color-error); }
+.text-warning { color: var(--color-warning); }
+.text-white { color: var(--color-white); }
+.text-black { color: var(--color-black); }
+
+/* --- Utilidades de Color de Fondo --- */
+.bg-primary { background-color: var(--color-primary); }
+.bg-secondary { background-color: var(--color-secondary); }
+.bg-light { background-color: var(--color-bg-light); }
+.bg-medium { background-color: var(--color-bg-medium); }
+.bg-soft { background-color: var(--color-bg-soft); }
+.bg-white { background-color: var(--color-white); }
+.bg-success { background-color: var(--color-success); }
+.bg-error { background-color: var(--color-error); }
+.bg-warning { background-color: var(--color-warning); }
+
+/* --- Utilidades de Espaciado --- */
+.mt-1 { margin-top: 1rem; }
+.mt-2 { margin-top: 2rem; }
+.mt-3 { margin-top: 3rem; }
+
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+.mb-3 { margin-bottom: 3rem; }
+
+.p-1 { padding: 1rem; }
+.p-2 { padding: 2rem; }
+.p-3 { padding: 3rem; }
+
+/* --- Estados Globales --- */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: wait;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* --- Responsive Utilities --- */
+@media (max-width: 768px) {
+  .container,
+  .container-sm {
+    padding: 0 1rem;
+  }
+  
+  .app-main {
+    padding: 1rem 0;
+  }
+}

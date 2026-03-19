@@ -1,0 +1,122 @@
+/* --- CONTENEDOR PRINCIPAL --- */
+.filtro-card {
+    /* Dimensiones y apariencia de la tarjeta */
+    width: 250px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra más definida */
+    font-family: 'Nunito Sans', sans-serif;
+    margin-top: 50px;
+    /* Layout */
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Espacio entre las secciones de Categorías y Buscar por */
+    align-self: flex-start; /* Para que no se estire con el contenido del feed */
+}
+
+/* --- TÍTULO PRINCIPAL "Filtros" --- */
+.filtro-titulo-principal {
+    font-size: 1.8em;
+    font-weight: 800; /* Extra-negrita para el título principal */
+    color: #000000;
+    margin: 0;
+    padding-bottom: 10px;
+    text-align: left;
+}
+
+/* --- TÍTULOS DE SECCIÓN ("Categorías", "Buscar por") --- */
+.filtro-titulo-seccion {
+    font-size: 1.2em;
+    font-weight: 700; /* Seminegrita */
+    color: #333333;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eeeeee; /* Separador sutil si lo deseas */
+    text-align: left;
+}
+
+/* --- GRUPO DE CHECKBOXES --- */
+.filtro-grupo-checkbox {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* --- ITEM INDIVIDUAL (Label) --- */
+.filtro-item {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    font-weight: 400;
+    color: #333333;
+    cursor: pointer;
+    user-select: none; /* Previene selección de texto al hacer clic */
+    text-align: left; /* Aseguramos la alineación general a la izquierda */
+    width: 100%;
+}
+
+/* --- ESTILO DEL INPUT CHECKBOX --- */
+.filtro-checkbox {
+    /* Ajusta el tamaño y el color del acento (azul marino) */
+    appearance: none; /* Esconde el checkbox nativo */
+    width: 18px;
+    height: 18px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    margin-right: 10px;
+    background-color: #fff;
+    vertical-align: middle;
+    cursor: pointer;
+    flex-shrink: 0; /* Asegura que el checkbox no se encoja */
+
+}
+
+/* Estilo cuando el checkbox está marcado (usa un icono o color) */
+.filtro-checkbox:checked {
+    background-color: #0056b3; /* Azul marino */
+    border-color: #0056b3;
+}
+
+/* Creando el "tick" blanco dentro del checkbox marcado */
+.filtro-checkbox:checked::before {
+    content: '✓';
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    line-height: 16px;
+}
+
+/* --- CONTADOR (El número entre paréntesis) --- */
+.filtro-contador {
+    font-size: 0.9em;
+    color: #777777;
+    margin-left: auto; 
+}
+
+/* --- BOTÓN APLICAR --- */
+.filtro-boton-aplicar {
+    /* Estilo del botón en la imagen (color claro, texto oscuro) */
+    background-color: transparent;
+    border: none;
+    color: #16394F; /* Texto oscuro */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700; /* Seminegrita */
+    
+    /* Alinear a la derecha si es necesario, o al centro del contenedor de la tarjeta */
+    align-self: flex-end; 
+    
+    /* Pequeño ajuste visual para separarlo del contenido superior */
+    margin-top: 15px; 
+}
+
+.filtro-boton-aplicar:hover {
+    background-color: #e0e0e0;
+}
+

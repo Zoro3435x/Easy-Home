@@ -1,0 +1,52 @@
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: var(--font-size-small);
+  font-family: var(--font-text);
+  text-align: left;
+}
+
+.required {
+  color: var(--color-error);
+  margin-left: 4px;
+}
+
+.form-select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--color-tertiary);
+  border-radius: 8px;
+  font-size: var(--font-size-small);
+  color: var(--color-primary);
+  background-color: var(--color-white);
+  font-family: var(--font-text);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23455A64' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.form-select:hover {
+  border-color: var(--color-primary);
+}
+
+.help-text {
+  margin-top: 6px;
+  font-size: var(--font-size-xs);
+  color: var(--color-tertiary);
+  font-family: var(--font-text);
+}

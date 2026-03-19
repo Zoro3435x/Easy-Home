@@ -1,0 +1,103 @@
+/* ============================================
+   CÓMO FUNCIONA - Sección de Proceso
+   ============================================ */
+
+/* --- Contenedor de la sección --- */
+.how-it-works-section {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- Título principal --- */
+.process-title {
+  font-family: var(--font-titles);
+  font-size: var(--font-size-h2);
+  font-weight: 700;
+  margin-bottom: 50px;
+  color: var(--color-primary);
+}
+
+/* --- Contenedor de los pasos (Flexbox) --- */
+.process-steps {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+/* --- Tarjeta de cada paso --- */
+.step-card {
+  flex: 1;
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-5px);
+}
+
+/* --- Círculo con número --- */
+.step-number {
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  margin: 0 auto 20px auto;
+  
+  /* Círculo */
+  border-radius: 50%;
+  
+  /* Colores */
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  
+  /* Tipografía */
+  font-family: var(--font-titles);
+  font-size: 28px;
+  font-weight: 700;
+  
+  /* Sombra */
+  box-shadow: 0 4px 10px rgba(22, 57, 79, 0.2);
+}
+
+/* --- Título del paso --- */
+.step-heading {
+  font-family: var(--font-titles);
+  font-size: var(--font-size-h4);
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: var(--color-primary);
+}
+
+/* --- Descripción del paso --- */
+.step-description {
+  font-family: var(--font-text);
+  font-size: var(--font-size-base);
+  color: #555;
+  line-height: 1.6;
+}
+
+/* --- Responsive: Pantallas pequeñas --- */
+@media (max-width: 768px) {
+  .how-it-works-section {
+    padding: 40px 20px;
+  }
+
+  .process-steps {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .process-title {
+    font-size: var(--font-size-h3);
+  }
+
+  .step-number {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 24px;
+  }
+}
