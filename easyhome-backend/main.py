@@ -20,13 +20,24 @@ app.mount(
     name="uploads",
 )
 
-# Configurar CORS para permitir peticiones desde el frontend
+# Configurar CORS para permitir peticiones desde el frontend.
+# IMPORTANTE: allow_credentials=True es incompatible con allow_headers=["*"] según la
+# especificación CORS — el navegador elimina los headers custom en ese caso.
+# Se listan explícitamente todos los headers que usa el frontend.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "https://d84l1y8p4kdic.cloudfront.net"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=[
+        "Content-Type",
+        "Authorization",
+        "X-User-Email",
+        "X-User-Roles",
+        "Accept",
+        "Origin",
+        "X-Requested-With",
+    ],
 )
 
 app.include_router(example.router, prefix="/api/v1")

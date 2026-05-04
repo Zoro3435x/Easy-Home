@@ -14,9 +14,9 @@ logger = logging.getLogger(__name__)
 
 class CognitoUserSync(BaseModel):
     email: EmailStr
-    cognito_sub: str
-    name: str = None
-    phone: str = None
+    cognito_sub: str | None = None
+    name: str | None = None
+    phone: str | None = None
     cognito_groups: list[str] = []
 
 
@@ -30,6 +30,9 @@ def sync_cognito_user(user_data: CognitoUserSync, db: Session = Depends(get_db))
     IMPORTANTE: Si el usuario no tiene grupos en Cognito, se le asigna automáticamente al grupo "Clientes"
     """
 
+    # Asegurar un sub local mínimo para evitar errores de validación/integridad
+    user_data.cognito_sub = user_data.cognito_sub or f"local-{user_data.email}"
+
     # NUEVO: obtener atributos directamente desde Cognito (email → nombre, teléfono, sub)
     cognito_attrs = cognito_service.get_user_by_email(user_data.email)
     if cognito_attrs:
@@ -41,10 +44,9 @@ def sync_cognito_user(user_data: CognitoUserSync, db: Session = Depends(get_db))
         logger.warning(f"No se pudieron obtener atributos para {user_data.email}")
 
     # ORIGINAL: búsqueda del usuario en la base de datos
-    existing_user = db.query(Usuario).filter(
-        (Usuario.correo_electronico == user_data.email) |
-        (Usuario.google_id == user_data.cognito_sub)
-    ).first()
+    existing_user = db.query(Usuario).filter(Usuario.correo_electronico == user_data.email).first()
+    if not existing_user and user_data.cognito_sub:
+        existing_user = db.query(Usuario).filter(Usuario.google_id == user_data.cognito_sub).first()
 
     # ORIGINAL: asegurar grupo por defecto
     groups_assigned = cognito_service.ensure_user_has_default_group(
