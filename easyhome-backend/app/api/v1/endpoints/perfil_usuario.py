@@ -3,6 +3,7 @@
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, status
 from sqlalchemy.orm import Session
 from app.core.database import get_db
+from app.core.authz import get_current_user, ensure_self_or_admin
 from app.models.user import Usuario
 from app.services.s3_service import s3_service
 import logging
@@ -69,7 +70,8 @@ def validate_image_file(file: UploadFile):
 async def actualizar_foto_perfil(
     id_usuario: int,
     file: UploadFile = File(...),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user),
 ):
     """
     Sube una nueva foto de perfil a S3 y actualiza la referencia en la base de datos.
@@ -79,6 +81,8 @@ async def actualizar_foto_perfil(
     - Formatos permitidos: JPG, JPEG, PNG, GIF, WEBP
     - Tamaño máximo: 5MB
     """
+    ensure_self_or_admin(id_usuario, current_user)
+
     # Validar que el usuario exista
     usuario = db.query(Usuario).filter(Usuario.id_usuario == id_usuario).first()
     if not usuario:
@@ -135,10 +139,16 @@ async def actualizar_foto_perfil(
 # 2️⃣ Obtener foto de perfil
 # -----------------------------------------------------------------
 @router.get("/{id_usuario}/foto-perfil")
-def obtener_foto_perfil(id_usuario: int, db: Session = Depends(get_db)):
+def obtener_foto_perfil(
+    id_usuario: int,
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user),
+):
     """
     Devuelve la URL firmada de la foto de perfil del usuario si existe.
     """
+    ensure_self_or_admin(id_usuario, current_user)
+
     usuario = db.query(Usuario).filter(Usuario.id_usuario == id_usuario).first()
     if not usuario or not usuario.foto_perfil:
         raise HTTPException(status_code=404, detail="Foto de perfil no encontrada")
@@ -151,10 +161,16 @@ def obtener_foto_perfil(id_usuario: int, db: Session = Depends(get_db)):
 # 3️⃣ Eliminar foto de perfil
 # -----------------------------------------------------------------
 @router.delete("/{id_usuario}/foto-perfil")
-def eliminar_foto_perfil(id_usuario: int, db: Session = Depends(get_db)):
+def eliminar_foto_perfil(
+    id_usuario: int,
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user),
+):
     """
     Elimina la foto de perfil del usuario tanto de S3 como de la base de datos.
     """
+    ensure_self_or_admin(id_usuario, current_user)
+
     usuario = db.query(Usuario).filter(Usuario.id_usuario == id_usuario).first()
     if not usuario or not usuario.foto_perfil:
         raise HTTPException(status_code=404, detail="Foto de perfil no encontrada")

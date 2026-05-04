@@ -6,6 +6,7 @@ from sqlalchemy.orm import joinedload
 from typing import List, Optional
 from datetime import datetime
 from app.core.database import get_db
+from app.core.authz import require_roles
 from app.models.user import Proveedor_Servicio, Usuario
 # Asegúrate de que esta importación sea correcta según tu estructura
 # Si 'foto_trabajo.py' está en 'app/models/', esta importación es correcta.
@@ -41,7 +42,8 @@ async def crear_solicitud_proveedor(
     # --- Datos adicionales del frontend ---
     nombre_completo: str = Form(...), # Nombre completo del usuario
     user_email: str = Form(...), # Email del usuario logueado
-    db: Session = Depends(get_db) # Inyectar la sesión de DB
+    db: Session = Depends(get_db), # Inyectar la sesión de DB
+    current_user: Usuario = Depends(require_roles("Clientes")),
 ):
     """
     Crea una solicitud de proveedor (postulación) asociada a un usuario (cliente) existente.
@@ -50,6 +52,9 @@ async def crear_solicitud_proveedor(
     """
     
     try:
+        if current_user.correo_electronico != user_email:
+            raise HTTPException(status_code=403, detail="No autorizado para crear solicitudes de otro usuario.")
+
         # 🔹 1. Buscar usuario por correo
         usuario = db.query(Usuario).filter(Usuario.correo_electronico == user_email).first()
         if not usuario:
@@ -142,6 +147,8 @@ async def crear_solicitud_proveedor(
             "fotos_subidas": urls_fotos_guardadas,
             "telefono_registrado": usuario.numero_telefono # Devuelve el teléfono que ya estaba
         }
+    except HTTPException:
+        raise
     except Exception as e:
         db.rollback() # Revertir cambios en caso de error
         logger.error(f"Error al crear solicitud para {user_email}: {e}")
@@ -154,7 +161,10 @@ async def crear_solicitud_proveedor(
 # =========================================================
 
 @router.get("/admin")
-def listar_solicitudes_admin(db: Session = Depends(get_db)):
+def listar_solicitudes_admin(
+    db: Session = Depends(get_db),
+    _current_user: Usuario = Depends(require_roles("Admin")),
+):
     """
     Muestra todas las solicitudes de proveedores (pendientes, aprobadas, rechazadas).
     Solo debe ser consumido por un usuario Administrador.
@@ -236,7 +246,8 @@ def listar_solicitudes_admin(db: Session = Depends(get_db)):
 def actualizar_estado_solicitud(
     id_proveedor: int,
     estado: str = Form(..., description="Debe ser 'aprobado' o 'rechazado'"),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    _current_user: Usuario = Depends(require_roles("Admin")),
 ):
     """
     Permite al administrador aprobar o rechazar una solicitud.
@@ -340,7 +351,8 @@ def actualizar_estado_solicitud(
 def obtener_fotos_proveedor(
     id_proveedor: int,
     expiration: int = 3600,  # 1 hora por defecto
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    _current_user: Usuario = Depends(require_roles("Admin")),
 ):
     """
     Obtiene las fotos de un proveedor con URLs pre-firmadas para acceso temporal.

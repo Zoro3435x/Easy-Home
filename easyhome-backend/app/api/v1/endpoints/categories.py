@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from pydantic import BaseModel
 from app.core.database import get_db
+from app.core.authz import require_roles
 from app.models import Categoria_Servicio
 
 router = APIRouter()
@@ -46,7 +47,11 @@ async def get_categories(db: Session = Depends(get_db)):
 
 
 @router.post("/", response_model=CategoryResponse, status_code=201)
-async def create_category(category: CategoryCreate, db: Session = Depends(get_db)):
+async def create_category(
+    category: CategoryCreate,
+    db: Session = Depends(get_db),
+    _current_user=Depends(require_roles("Admin")),
+):
     """
     Crea una nueva categoría de servicio.
     """
@@ -83,7 +88,11 @@ async def create_category(category: CategoryCreate, db: Session = Depends(get_db
 
 
 @router.delete("/{category_id}", status_code=204)
-async def delete_category(category_id: int, db: Session = Depends(get_db)):
+async def delete_category(
+    category_id: int,
+    db: Session = Depends(get_db),
+    _current_user=Depends(require_roles("Admin")),
+):
     """
     Elimina una categoría de servicio.
     """
@@ -107,7 +116,12 @@ async def delete_category(category_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{category_id}", response_model=CategoryResponse)
-async def update_category(category_id: int, category_update: CategoryUpdate, db: Session = Depends(get_db)):
+async def update_category(
+    category_id: int,
+    category_update: CategoryUpdate,
+    db: Session = Depends(get_db),
+    _current_user=Depends(require_roles("Admin")),
+):
     """
     Actualiza una categoría de servicio.
     """

@@ -7,6 +7,7 @@ import logging
 
 # --- Importaciones de tu proyecto ---
 from app.core.database import get_db
+from app.core.authz import require_roles
 from app.models.user import Usuario, Proveedor_Servicio
 # Ajusta esta importación si tus modelos están en archivos separados
 from app.models.property import Publicacion_Servicio, Categoria_Servicio, Imagen_Publicacion
@@ -35,19 +36,19 @@ async def crear_publicacion(
     user_email: str = Form(..., description="Email del usuario autenticado"),
     
     # --- Datos de autenticación y BD ---
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(require_roles("Trabajadores"))
 ):
     """
     Permite a un PROVEEDOR autenticado crear una nueva publicación de servicio.
     Sube las fotos de referencia a S3 y guarda la S3 Key.
     """
     
-    # 🔹 1. Obtener el usuario desde la BD por email
-    current_user = db.query(Usuario).filter(Usuario.correo_electronico == user_email).first()
-    if not current_user:
+    # 🔹 1. El correo del formulario debe coincidir con el autenticado
+    if current_user.correo_electronico != user_email:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Usuario no encontrado."
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="No autorizado para publicar en nombre de otro usuario.",
         )
     
     # 🔹 2. Verificar que el usuario sea un Proveedor
