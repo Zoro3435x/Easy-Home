@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   const auth = useAuth();
   
   // Si está cargando, mostrar loading
-  if (auth.isLoading) {
+  if (auth.loading) {
     return <div style={{ textAlign: 'center', padding: '40px' }}>Cargando...</div>;
   }
   

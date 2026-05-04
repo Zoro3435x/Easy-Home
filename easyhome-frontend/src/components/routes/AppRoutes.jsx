@@ -36,7 +36,14 @@ const AppRoutes = () => {
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="/subscriptions" element={<Subscriptions />} />
       <Route path="/advertise" element={<Advertise />} />
-      <Route path="/publicarservicio" element={<PublicarServicio />} />
+      <Route 
+        path="/publicarservicio"
+        element={
+          <ProtectedRoute allowedRoles={['Trabajadores']}>
+            <PublicarServicio />
+          </ProtectedRoute>
+        }
+      />
       
       {/* Ruta de postulación - Solo para clientes autenticados */}
       <Route 
@@ -59,10 +66,10 @@ const AppRoutes = () => {
       />
 
       {/* Rutas de Cliente (prioridad 1 - incluye Google) */}
-        <Route 
+        <Route
           path="/cliente/feed"
           element={
-            <ProtectedRoute allowedRoles={['Clientes']}>
+            <ProtectedRoute allowedRoles={['Clientes', 'Trabajadores', 'Admin']}>
               <ClienteFeed />
             </ProtectedRoute>
           }
