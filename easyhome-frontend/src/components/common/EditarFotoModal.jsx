@@ -12,7 +12,7 @@ function EditarFotoModal({ isOpen, onClose, currentPhoto, onSave }) {
   const handleFileSelect = (file) => {
     if (file && file.type.startsWith('image/')) {
       setSelectedFile(file);
-      
+
       // Crear preview
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -42,19 +42,19 @@ function EditarFotoModal({ isOpen, onClose, currentPhoto, onSave }) {
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
-    
+
     const file = e.dataTransfer.files[0];
     handleFileSelect(file);
   };
 
   const handleSave = async () => {
     if (!selectedFile) return;
-    
+
     setUploading(true);
     try {
       // Llamar a la función de guardado pasada por props
       const result = await onSave(selectedFile);
-      
+
       if (result?.success) {
         handleClose();
       } else {
@@ -90,9 +90,9 @@ function EditarFotoModal({ isOpen, onClose, currentPhoto, onSave }) {
         <div className="modal-body">
           {preview || currentPhoto ? (
             <div className="photo-preview-container">
-              <img 
-                src={preview || currentPhoto} 
-                alt="Preview" 
+              <img
+                src={preview || currentPhoto}
+                alt="Preview"
                 className="photo-preview-large"
               />
               {!preview && (
@@ -101,7 +101,7 @@ function EditarFotoModal({ isOpen, onClose, currentPhoto, onSave }) {
             </div>
           ) : null}
 
-          <div 
+          <div
             className={`upload-area ${isDragging ? 'dragging' : ''}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -110,8 +110,8 @@ function EditarFotoModal({ isOpen, onClose, currentPhoto, onSave }) {
           >
             <div className="upload-icon">📷</div>
             <p className="upload-text">
-              {selectedFile 
-                ? `Archivo seleccionado: ${selectedFile.name}` 
+              {selectedFile
+                ? `Archivo seleccionado: ${selectedFile.name}`
                 : 'Arrastra una imagen aquí o haz clic para seleccionar'}
             </p>
             <p className="upload-hint">PNG, JPG o JPEG (máx. 5MB)</p>
@@ -126,15 +126,15 @@ function EditarFotoModal({ isOpen, onClose, currentPhoto, onSave }) {
         </div>
 
         <div className="modal-footer">
-          <button 
-            className="btn-modal-cancel" 
+          <button
+            className="btn-modal-cancel"
             onClick={handleClose}
             disabled={uploading}
           >
             Cancelar
           </button>
-          <button 
-            className="btn-modal-save" 
+          <button
+            className="btn-modal-save"
             onClick={handleSave}
             disabled={!selectedFile || uploading}
           >

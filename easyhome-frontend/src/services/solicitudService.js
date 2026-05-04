@@ -17,7 +17,7 @@ const solicitudService = {
   actualizarEstado: async (idProveedor, estado) => {
     const formData = new FormData();
     formData.append('estado', estado);
-    
+
     const response = await apiClient.put(`/api/v1/solicitudes/admin/${idProveedor}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'

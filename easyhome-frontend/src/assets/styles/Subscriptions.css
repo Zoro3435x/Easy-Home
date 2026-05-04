@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
- 
+
 /* Seccion: planes */
 .pricing-section {
     padding: 60px 20px;
@@ -8,14 +8,14 @@
     font-family: 'Nunito Sans', sans-serif;
     background-color: white;
 }
- 
+
 .pricing-title {
     font-size: 36px;
     font-weight: 800;
     margin-bottom: 15px;
     color: #333;
 }
- 
+
 .pricing-subtitle {
     font-size: 16px;
     color: #555;
@@ -25,7 +25,7 @@
     margin-right: auto;
     line-height: 1.6;
 }
- 
+
 /* --- Contenedor de Tarjetas --- */
 .pricing-cards-container {
     display: flex;
@@ -36,7 +36,7 @@
     align-items: stretch;
     flex-wrap: wrap; /* Para responsividad */
 }
- 
+
 /* --- Estilos Base de Cada Tarjeta --- */
 .pricing-card {
     flex: 1 1 300px;
@@ -49,7 +49,7 @@
     overflow: hidden;
     transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
- 
+
 /* --- Nuevos estilos para la estructura interna --- */
 .card-header {
     font-size: 24px;
@@ -58,14 +58,14 @@
     text-align: left;
     color: #333;
 }
- 
+
 .card-separator {
     width: calc(100% - 60px);
     height: 2px;
     background-color: #0d2644;
     margin: 0 30px 15px 30px;
 }
- 
+
 .card-price {
     font-size: 30px;
     font-weight: 700;
@@ -73,14 +73,14 @@
     padding: 10px 30px 30px 30px;
     text-align: center;
 }
- 
+
 .card-features {
     list-style: none;
     padding: 0 30px;
     margin: 0;
     flex-grow: 1;
 }
- 
+
 /* Estilos aplicados al <li>  */
 .card-features li {
     display: flex;
@@ -91,13 +91,13 @@
     line-height: 1.4;
     color: #555;
 }
- 
+
 /* Estilos aplicados al <svg> */
 .card-features li svg {
     margin-right: 10px;
     flex-shrink: 0;
 }
- 
+
 /* --- Nuevos estilos para el Botón --- */
 .card-button {
     display: block;
@@ -115,23 +115,23 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
- 
+
 .card-button:hover {
     background-color: #1a3a5e;
 }
- 
- 
- 
+
+
+
 /* --- HOVER  --- */
 .pricing-card:hover {
     background-color: #E1E8ED;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
     transform: translateY(-5px);
 }
- 
- 
+
+
 /* Seccion: tabla de comparacion */
- 
+
 .comparison-title {
   text-align: center;
   font-size: 2.2rem;
@@ -139,8 +139,8 @@
   margin-top: 4rem;
   margin-bottom: 3rem;
 }
- 
- 
+
+
 .comparison-table {
   display: grid;
   grid-template-columns: minmax(200px, 1.5fr) 1fr 1fr 1fr;
@@ -150,18 +150,18 @@
   border-radius: 12px;
   margin-top: 3rem;
 }
- 
+
 .compare-column {
   display: contents;
 }
- 
+
 /* fila 1 */
 .features-column h2,
 .compare-header {
   grid-row: 1;
 }
- 
- 
+
+
 .features-column h2 {
   grid-column: 1;
   font-size: 1.5rem;
@@ -170,8 +170,8 @@
   align-items: flex-end;
   padding-bottom: 1rem;
 }
- 
- 
+
+
 .compare-header {
   display: flex;
   flex-direction: column;
@@ -181,19 +181,19 @@
   padding-top: 2rem;
   position: relative;
 }
- 
+
 .compare-header  p {
     font-size: 15px;
     color: #4D4B4B;
 }
- 
+
 .compare-plan-column:nth-of-type(2) .compare-header { grid-column: 2; }
 .compare-plan-column:nth-of-type(3) .compare-header { grid-column: 3; }
 .compare-plan-column:nth-of-type(4) .compare-header { grid-column: 4; }
- 
- 
+
+
 /* Fila 2 */
- 
+
 .compare-feature-labels,
 .compare-features-list {
   grid-row: 2;
@@ -201,17 +201,17 @@
   padding: 0;
   margin: 0;
 }
- 
+
 .compare-feature-labels {
   grid-column: 1;
 }
- 
+
 .compare-plan-column:nth-of-type(2) .compare-features-list { grid-column: 2; }
 .compare-plan-column:nth-of-type(3) .compare-features-list { grid-column: 3; }
 .compare-plan-column:nth-of-type(4) .compare-features-list { grid-column: 4; }
- 
- 
- 
+
+
+
 .compare-feature-labels li,
 .compare-features-list li {
   min-height: 80px;
@@ -219,19 +219,19 @@
   align-items: center;
   border-bottom: 1px solid #f0f0f0;
 }
- 
- 
+
+
 .compare-feature-labels li {
   justify-content: flex-start;
   font-size: 1rem;
   font-weight: 500;
   color: #000000;
 }
- 
+
 .compare-features-list li {
   justify-content: center;
 }
- 
+
 .compare-plan-column h3 {
   font-size: 2rem;
   font-weight: 600;
@@ -258,13 +258,13 @@
   color: #000000;
   padding: 0 0.5rem;
 }
- 
- 
+
+
 .compare-column.highlighted {
   display: block;
   grid-column: 3;
   grid-row: 1 / span 2;
- 
+
   border: 2px solid #F0AD4E;
   border-radius: 12px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
@@ -272,7 +272,7 @@
   background-color: #ffffff;
   z-index: 10;
 }
- 
+
 /* Etiqueta popular */
 .popular-tag {
   position: absolute;
@@ -287,9 +287,9 @@
   border-radius: 15px;
   white-space: nowrap;
 }
- 
- 
- 
+
+
+
 /* Seccion: preguntas frecuentes */
 /* --- ESTILOS GENERALES --- */
 .faq-section {
@@ -298,19 +298,19 @@
     font-family: 'Nunito Sans', sans-serif;
     background-color: white;
 }
- 
+
 .faq-title {
     font-size: 32px;
     font-weight: 800;
     margin-bottom: 40px;
     color: #333;
 }
- 
+
 .faq-accordion {
     max-width: 800px;
     margin: 0 auto;
 }
- 
+
 /* --- ESTILOS DEL ITEM INDIVIDUAL --- */
 .faq-item {
     margin-bottom: 15px;
@@ -320,11 +320,11 @@
     transition: box-shadow 0.3s ease;
     overflow: hidden; /* Oculta el contenido antes del despliegue */
 }
- 
+
 .faq-item:hover {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }
- 
+
 /* --- ESTILOS DE LA CABECERA (BOTÓN) --- */
 .faq-question-header {
     width: 100%;
@@ -340,13 +340,13 @@
     color: #333;
     transition: background-color 0.3s;
 }
- 
+
 /* Estilo para el borde del item activo (color morado) */
 .faq-item.active {
     border-color: #0b2f4a; /* Morado */
     box-shadow: 0 0 0 2px #0b2f4a;
 }
- 
+
 /* --- ICONOS Y FLECHA --- */
 .faq-icon {
     font-size: 18px;
@@ -355,17 +355,17 @@
     width: 25px; /* Ancho fijo para alinear los iconos */
     text-align: center;
 }
- 
+
 .faq-arrow {
     margin-left: auto; /* Empuja la flecha a la derecha */
     transition: transform 0.3s ease;
 }
- 
+
 /* Gira la flecha cuando el ítem está activo */
 .faq-item.active .faq-arrow {
     transform: rotate(180deg);
 }
- 
+
 /* --- ESTILOS DE LA RESPUESTA (CONTENIDO DESPLEGABLE) --- */
 .faq-answer-content {
     /* Clave para la animación de altura en React/JS */
@@ -374,14 +374,14 @@
     background-color: #f9f9f9;
     padding: 0 20px; /* Relleno inicial de 0 */
 }
- 
+
 /* Estilo para mostrar la respuesta (manejar la altura con JS) */
 .faq-item.active .faq-answer-content {
     max-height: 200px; /* Suficientemente grande para el contenido */
     padding: 15px 20px;
     border-top: 1px solid #eee;
 }
- 
+
 .faq-answer-content p {
     margin: 0;
     font-size: 15px;

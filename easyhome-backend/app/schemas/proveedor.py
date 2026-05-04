@@ -1,13 +1,15 @@
 # app/schemas/proveedor.py
 
-from pydantic import BaseModel, EmailStr
-from typing import Optional, List
-from decimal import Decimal
 from datetime import datetime
+from decimal import Decimal
+from typing import List, Optional
+
+from pydantic import BaseModel, EmailStr
 
 # -----------------------------------------------
 # --- Esquemas para Endpoint 1: "Acerca de" ---
 # -----------------------------------------------
+
 
 class UsuarioPerfilSchema(BaseModel):
     correo_electronico: EmailStr
@@ -15,6 +17,7 @@ class UsuarioPerfilSchema(BaseModel):
 
     class Config:
         from_attributes = True  # Permite que Pydantic lea desde modelos SQLAlchemy
+
 
 class ProveedorPerfilAboutSchema(BaseModel):
     # --- Datos de la tabla Proveedor_Servicio ---
@@ -27,9 +30,9 @@ class ProveedorPerfilAboutSchema(BaseModel):
     cantidad_trabajos_realizados: int
     direccion: Optional[str]
     estado_solicitud: str  # Para verificar que sea 'aprobado'
-    
+
     # --- Datos anidados de la tabla Usuario ---
-    usuario: UsuarioPerfilSchema 
+    usuario: UsuarioPerfilSchema
 
     # --- Campos Calculados (que creamos en el endpoint) ---
     total_reseñas: int = 0
@@ -38,9 +41,11 @@ class ProveedorPerfilAboutSchema(BaseModel):
     class Config:
         from_attributes = True
 
+
 # -----------------------------------------------------------------
 # --- Esquemas para Endpoint 2 ("Mis Servicios") y 3 ("Portafolio") ---
 # -----------------------------------------------------------------
+
 
 class ImagenPublicacionSchema(BaseModel):
     id_imagen: int
@@ -49,6 +54,7 @@ class ImagenPublicacionSchema(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class PublicacionServicioSchema(BaseModel):
     id_publicacion: int
@@ -61,7 +67,7 @@ class PublicacionServicioSchema(BaseModel):
     fecha_publicacion: datetime
     estado: str
     vistas: int
-    
+
     # --- Relación anidada ---
     imagen_publicacion: List[ImagenPublicacionSchema] = []
 
@@ -72,9 +78,11 @@ class PublicacionServicioSchema(BaseModel):
     class Config:
         from_attributes = True
 
+
 # -----------------------------------------------
 # --- Esquemas para Endpoint 4: "Reseñas" ---
 # -----------------------------------------------
+
 
 class ImagenReseñaSchema(BaseModel):
     id_imagen_reseña: int
@@ -83,12 +91,14 @@ class ImagenReseñaSchema(BaseModel):
     class Config:
         from_attributes = True
 
+
 class ClienteReseñaSchema(BaseModel):
     id_usuario: int
     nombre: str
-    
+
     class Config:
         from_attributes = True
+
 
 class ServicioContratadoReseñaSchema(BaseModel):
     fecha_confirmacion_finalizacion: Optional[datetime]
@@ -96,13 +106,14 @@ class ServicioContratadoReseñaSchema(BaseModel):
     class Config:
         from_attributes = True
 
+
 class ReseñaPublicaSchema(BaseModel):
     id_reseña: int
     calificacion_general: int
     comentario: Optional[str]
     recomendacion: str
     fecha_reseña: datetime
-    
+
     # --- Relaciones anidadas ---
     usuario: ClienteReseñaSchema
     servicio_contratado: ServicioContratadoReseñaSchema

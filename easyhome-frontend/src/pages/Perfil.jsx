@@ -21,25 +21,23 @@ import EditarFotoModal from '../components/common/EditarFotoModal';
 
 function Perfil() {
   const auth = useAuth();
-  const { 
-    userData, 
-    loading, 
-    error, 
-    calculateAge, 
+  const {
+    userData,
+    loading,
+    error,
+    calculateAge,
     splitName,
     uploadProfilePhoto,
-    getProfilePhotoUrl 
+    getProfilePhotoUrl
   } = useUserProfile();
   const { isWorker, isClient } = useUserCapabilities();
-  
+
   // Por defecto, si es trabajador muestra "Acerca de", si no "Cambiar datos"
   const [activeTab, setActiveTab] = useState(isWorker ? 'acercaDe' : 'cambiarDatos');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState(null);
-  const [uploadingPhoto, setUploadingPhoto] = useState(false);
-
-  // Cargar foto de perfil cuando el usuario esté disponible
-  useEffect(() => {
+  const [, setUploadingPhoto] = useState(false);
+useEffect(() => {
     const loadProfilePhoto = async () => {
       if (userData?.id_usuario) {
         const result = await getProfilePhotoUrl();
@@ -48,9 +46,10 @@ function Perfil() {
         }
       }
     };
-    
     loadProfilePhoto();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData?.id_usuario]);
+
 
   if (loading) {
     return (
@@ -72,9 +71,6 @@ function Perfil() {
     );
   }
 
-  const { nombres, apellidos } = splitName(userData.nombre);
-  const edad = calculateAge(userData.fecha_nacimiento);
-  
   // Determinar badge principal (prioridad a Trabajador si tiene ambos roles)
   const getBadge = () => {
     if (isWorker) return 'Proveedor verificado';
@@ -102,10 +98,10 @@ function Perfil() {
 
   const handleSavePhoto = async (file) => {
     setUploadingPhoto(true);
-    
+
     try {
       const result = await uploadProfilePhoto(file);
-      
+
       if (result.success) {
         setProfilePhoto(result.url);
         return result;
@@ -151,12 +147,12 @@ function Perfil() {
       <aside className="perfil-sidebar">
         <div className="perfil-avatar-container">
           <div className="perfil-avatar">
-            <img 
-              src={profilePhoto || auth.user?.profile?.picture || 'https://via.placeholder.com/120'} 
+            <img
+              src={profilePhoto || auth.user?.profile?.picture || 'https://via.placeholder.com/120'}
               alt={userData.nombre}
             />
           </div>
-          <button 
+          <button
             className="edit-photo-btn"
             onClick={() => setIsModalOpen(true)}
             title="Editar foto de perfil"
@@ -164,11 +160,11 @@ function Perfil() {
             ✏️
           </button>
         </div>
-        
+
         <h2 className="perfil-nombre">{userData.nombre}</h2>
-        
+
         <span className="perfil-badge">{getBadge()}</span>
-        
+
         {/* Estadísticas (estáticas por ahora) */}
         <div className="perfil-stats">
           <div className="stat-item">

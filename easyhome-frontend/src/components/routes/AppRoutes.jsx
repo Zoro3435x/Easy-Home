@@ -32,11 +32,11 @@ const AppRoutes = () => {
       {/* Rutas públicas */}
       <Route path="/" element={<Home />} />
       <Route path="/auth" element={<Auth />} />
-      <Route path="/callback" element={<Callback />} /> 
+      <Route path="/callback" element={<Callback />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="/subscriptions" element={<Subscriptions />} />
       <Route path="/advertise" element={<Advertise />} />
-      <Route 
+      <Route
         path="/publicarservicio"
         element={
           <ProtectedRoute allowedRoles={['Trabajadores']}>
@@ -44,25 +44,25 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-      
+
       {/* Ruta de postulación - Solo para clientes autenticados */}
-      <Route 
-        path="/postulate" 
+      <Route
+        path="/postulate"
         element={
           <ProtectedRoute allowedRoles={['Clientes']}>
             <Postulate />
           </ProtectedRoute>
-        } 
+        }
       />
 
       {/* Perfil unificado - Todos los autenticados */}
-      <Route 
-        path="/perfil" 
+      <Route
+        path="/perfil"
         element={
           <ProtectedRoute allowedRoles={['Clientes', 'Trabajadores', 'Admin']}>
             <Perfil />
           </ProtectedRoute>
-        } 
+        }
       />
 
       {/* Rutas de Cliente (prioridad 1 - incluye Google) */}
@@ -74,81 +74,81 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
-      <Route 
-        path="/cliente/dashboard" 
+      <Route
+        path="/cliente/dashboard"
         element={
           <ProtectedRoute allowedRoles={['Clientes']}>
             <ClienteDashboard />
           </ProtectedRoute>
-        } 
+        }
       />
-      <Route 
-        path="/cliente/servicios" 
+      <Route
+        path="/cliente/servicios"
         element={
           <ProtectedRoute allowedRoles={['Clientes']}>
             <ClienteServicios />
           </ProtectedRoute>
-        } 
+        }
       />
 
       {/* Rutas de Trabajador (prioridad 2) */}
-      <Route 
-        path="/trabajador/dashboard" 
+      <Route
+        path="/trabajador/dashboard"
         element={
           <ProtectedRoute allowedRoles={['Trabajadores']}>
             <TrabajadorDashboard />
           </ProtectedRoute>
-        } 
+        }
       />
-      <Route 
-        path="/trabajador/servicios" 
+      <Route
+        path="/trabajador/servicios"
         element={
           <ProtectedRoute allowedRoles={['Trabajadores']}>
             <TrabajadorServicios />
           </ProtectedRoute>
-        } 
+        }
       />
 
       {/* Rutas de Admin */}
-      <Route 
-        path="/admin/dashboard" 
+      <Route
+        path="/admin/dashboard"
         element={
           <ProtectedRoute allowedRoles={['Admin']}>
             <AdminDashboard />
           </ProtectedRoute>
-        } 
+        }
       />
-      <Route 
-        path="/admin/usuarios" 
+      <Route
+        path="/admin/usuarios"
         element={
           <ProtectedRoute allowedRoles={['Admin']}>
             <AdminUsuarios />
           </ProtectedRoute>
-        } 
+        }
       />
-      <Route 
-        path="/admin/reportes" 
+      <Route
+        path="/admin/reportes"
         element={
           <ProtectedRoute allowedRoles={['Admin']}>
             <AdminReportes />
           </ProtectedRoute>
-        } 
+        }
       />
-      <Route 
-        path="/admin/categories" 
+      <Route
+        path="/admin/categories"
         element={
           <ProtectedRoute allowedRoles={['Admin']}>
             <AdminCategories />
           </ProtectedRoute>
-        } 
+        }
       />
-      <Route 
-        path="/admin/solicitudes" 
+      <Route
+        path="/admin/solicitudes"
         element={
           <ProtectedRoute allowedRoles={['Admin']}>
             <AdminSolicitudes />
           </ProtectedRoute>
-        } 
+        }
       />
 
       {/* Ruta 404 */}

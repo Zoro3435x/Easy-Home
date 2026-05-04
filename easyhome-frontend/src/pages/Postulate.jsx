@@ -26,7 +26,7 @@ const Postulate = () => {
   const [categorias, setCategorias] = useState([]);
   const [loadingCategorias, setLoadingCategorias] = useState(true);
   const [errorCategorias, setErrorCategorias] = useState(null);
-  
+
   // Estado para previsualización de imágenes (ahora múltiples)
   const [imagePreviews, setImagePreviews] = useState([]);
 
@@ -35,7 +35,7 @@ const Postulate = () => {
     const fetchCategorias = async () => {
       try {
         const data = await categoryService.getAll();
-        
+
         // Verificar si data es un array
         if (Array.isArray(data)) {
           setCategorias(data);
@@ -79,11 +79,11 @@ const Postulate = () => {
     setFormData(prev => {
       const serviciosActuales = prev.servicios_ofrece;
       const yaSeleccionado = serviciosActuales.includes(categoriaNombre);
-      
+
       const nuevosServicios = yaSeleccionado
         ? serviciosActuales.filter(nombre => nombre !== categoriaNombre)
         : [...serviciosActuales, categoriaNombre];
-      
+
       return {
         ...prev,
         servicios_ofrece: nuevosServicios,
@@ -94,13 +94,13 @@ const Postulate = () => {
   // Manejar carga de imágenes (múltiples)
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    
+
     if (files.length === 0) return;
 
     // Validar cada archivo
     const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
     const maxSize = 5 * 1024 * 1024; // 5MB por imagen
-    
+
     const validFiles = [];
     const previews = [];
 
@@ -273,7 +273,7 @@ const Postulate = () => {
                 multiple
                 required
               />
-              
+
               {imagePreviews.length === 0 ? (
                 <label htmlFor="evidencia_fotografica" className="upload-label">
                   <div className="upload-icon">

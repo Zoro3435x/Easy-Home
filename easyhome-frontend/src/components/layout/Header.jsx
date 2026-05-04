@@ -34,7 +34,7 @@ function Header() {
         </div>
         <ul className="nav-right">
           <li><a href="/cliente/feed">Publicaciones</a></li>
-          
+
           {auth.isAuthenticated ? (
             <>
               {isAdmin(auth.user) && (
@@ -60,9 +60,9 @@ function Header() {
               </a>
             </li>
           )}
-          
+
           <li><Link to="/subscriptions">Suscripciones</Link></li>
-          <li><Link to="/advertise">Anúnciate</Link></li>    
+          <li><Link to="/advertise">Anúnciate</Link></li>
         </ul>
       </nav>
     </header>

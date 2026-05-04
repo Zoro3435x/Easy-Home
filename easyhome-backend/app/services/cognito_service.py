@@ -4,8 +4,9 @@ This module is intentionally minimal and is designed to allow the backend to run
 without requiring AWS credentials or boto3.
 """
 
-from app.core.config import settings
 import logging
+
+from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +33,9 @@ class CognitoService:
             return True
 
         # En caso de que se habilite Cognito en el futuro, aquí iría la implementación.
-        logger.warning("Cognito está habilitado pero no soportado en esta versión local")
+        logger.warning(
+            "Cognito está habilitado pero no soportado en esta versión local"
+        )
         return False
 
     def get_user_groups(self, username: str) -> list[str]:
@@ -50,7 +53,9 @@ class CognitoService:
         """Devuelve un diccionario vacío en modo local."""
         return {}
 
-    def ensure_user_has_default_group(self, username: str, current_groups: list[str] = None) -> bool:
+    def ensure_user_has_default_group(
+        self, username: str, current_groups: list[str] = None
+    ) -> bool:
         """Asegura que un usuario tenga el grupo por defecto en modo local."""
         if current_groups is None or len(current_groups) == 0:
             return True

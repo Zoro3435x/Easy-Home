@@ -5,24 +5,24 @@ import { hasAnyRole } from '../../utils/authUtils';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const auth = useAuth();
-  
+
   // Si está cargando, mostrar loading
   if (auth.loading) {
     return <div style={{ textAlign: 'center', padding: '40px' }}>Cargando...</div>;
   }
-  
+
   // Si no está autenticado, redirigir al login
   if (!auth.isAuthenticated) {
     return <Navigate to="/auth" replace />;
   }
-  
+
   // Si se especificaron roles permitidos, verificar
   if (allowedRoles && allowedRoles.length > 0) {
     if (!hasAnyRole(auth.user, allowedRoles)) {
       return <Navigate to="/unauthorized" replace />;
     }
   }
-  
+
   return children;
 };
 

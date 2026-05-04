@@ -2,7 +2,7 @@
 -- Ejecutar este script en tu base de datos PostgreSQL
 
 -- Agregar la columna foto_perfil a la tabla usuario
-ALTER TABLE usuario 
+ALTER TABLE usuario
 ADD COLUMN IF NOT EXISTS foto_perfil VARCHAR(500);
 
 -- Comentario para documentar la columna

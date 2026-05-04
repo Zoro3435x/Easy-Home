@@ -1,0 +1,9 @@
+line-length = 88
+select = ["E", "F", "I"] # Errores, Pyflakes e Importaciones
+fix = true # Corregir automáticamente lo que sea posible
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "I"]
+fix = true
+ignore = ["E501"]

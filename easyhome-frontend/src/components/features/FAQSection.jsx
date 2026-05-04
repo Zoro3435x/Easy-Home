@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../assets/styles/FAQSection.css';
- 
+
 function SwitchHorizontalIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -14,7 +14,7 @@ function SwitchHorizontalIcon() {
     </svg>
   );
 }
- 
+
 function CurrencyDollarIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -26,7 +26,7 @@ function CurrencyDollarIcon() {
     </svg>
   );
 }
- 
+
 function MoneyBag() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-tax">
@@ -39,7 +39,7 @@ function MoneyBag() {
     </svg>
   );
 }
- 
+
 function CancelIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cancel">
@@ -49,7 +49,7 @@ function CancelIcon() {
     </svg>
   );
 }
- 
+
 function SendIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-mail">
@@ -59,18 +59,18 @@ function SendIcon() {
     </svg>
   );
 }
- 
+
 function Information() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-file-info"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005zm0 12h-1a1 1 0 0 0 0 2v3a1 1 0 0 0 1 1h1a1 1 0 0 0 1 -1l-.007 -.117a1 1 0 0 0 -.876 -.876l-.117 -.007v-3a1 1 0 0 0 -1 -1m.01 -3h-.01a1 1 0 0 0 -.117 1.993l.127 .007a1 1 0 0 0 0 -2" />
     <path d="M19 7h-4l-.001 -4.001z" />
     </svg>
   )
- 
+
 }
 // -----------------------------------------------------------
- 
- 
+
+
 function FAQSection() {
   const faqData = [
     {
@@ -96,13 +96,13 @@ function FAQSection() {
     { id: 5, icon: '', question: '¿Debo enviar mi banner en un tamaño específico?', answer: 'Sí, cada plan tiene especificaciones de tamaño. Las medidas necesarias serán indicadas al momento de seleccionar el plan deseado.' },
     { id: 6, icon: '', question: '¿Qué datos necesito enviar?', answer: 'Necesitamos información sobre tu empresa, un correo electrónico para contactarnos y el banner que se desea mostrar.' },
   ];
- 
+
   const [activeIndex, setActiveIndex] = useState(null);
- 
+
   const toggleFAQ = (id) => {
     setActiveIndex(activeIndex === id ? null : id);
   };
- 
+
   // Función para renderizar el icono
   const renderIcon = (item) => {
     if (item.id === 1) {
@@ -124,15 +124,15 @@ function FAQSection() {
       return <Information />;
     }
   };
- 
+
   return (
     <section className="faq-section">
       <h2 className="faq-title">Preguntas Frecuentes</h2>
-     
+
       <div className="faq-accordion">
         {faqData.map((item) => (
           <div key={item.id} className={`faq-item ${activeIndex === item.id ? 'active' : ''}`}>
-           
+
             <button
               className="faq-question-header"
               onClick={() => toggleFAQ(item.id)}
@@ -140,14 +140,14 @@ function FAQSection() {
               <span className="faq-icon">
                 {renderIcon(item)}
               </span>
- 
+
               <span className="faq-question-text">{item.question}</span>
               <span className="faq-arrow">
                 {/* Ícono de la flecha rotatoria (corregido a camelCase) */}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </span>
             </button>
-           
+
             <div className="faq-answer-content">
               <p>{item.answer}</p>
             </div>
@@ -157,5 +157,5 @@ function FAQSection() {
     </section>
   );
 }
- 
+
 export default FAQSection;

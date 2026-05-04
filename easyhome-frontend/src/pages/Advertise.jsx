@@ -2,7 +2,7 @@ import React from 'react';
 import FAQSection from '../components/features/FAQSection'
 import "../assets/styles/FAQSection.css"
 import "../assets/styles/advertise.css"
- 
+
 function CheckIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24"
@@ -22,7 +22,7 @@ function CheckIcon() {
     </svg>
   );
 }
- 
+
 function CircleXIcon({ size = 24, color = "#dc3545", className = "" }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={color} className={`icon icon-tabler icons-tabler-filled icon-tabler-circle-x ${className}`}>
@@ -31,8 +31,8 @@ function CircleXIcon({ size = 24, color = "#dc3545", className = "" }) {
     </svg>
   );
 }
- 
- 
+
+
 function Advertise() {
     return (
         <section className="pricing-section">
@@ -40,9 +40,9 @@ function Advertise() {
             <p className="pricing-subtitle">
                 ¿Buscas darle mayor visibilidad a tu empresa y tu público se relaciona con los Servicios del Hogar? <br />Llegaste al lugar indicado.
             </p>
- 
+
             <div className="pricing-cards-container">
- 
+
                 {/* Plan Básico */}
                 <div className="pricing-card">
                     <div className="card-header">Rotatorio</div>
@@ -52,11 +52,11 @@ function Advertise() {
                         <li><CheckIcon /> Banner rotatorio</li>
                         <li><CheckIcon /> Posicionado en el centro del sitio</li>
                         <li><CircleXIcon /> Compartido con otros anunciantes</li>
-                       
+
                     </ul>
                     <button className="card-button">Comenzar Ahora</button>
                 </div>
- 
+
                 {/* Plan Esencial */}
                 <div className="pricing-card">
                     <div className="card-header">Lateral</div>
@@ -69,7 +69,7 @@ function Advertise() {
                     </ul>
                     <button className="card-button">Comenzar Ahora</button>
                 </div>
- 
+
                 {/* Plan Premium */}
                 <div className="pricing-card">
                     <div className="card-header">Superior</div>
@@ -85,11 +85,11 @@ function Advertise() {
                     <button className="card-button">Comenzar Ahora</button>
                 </div>
             </div>
- 
+
             <br />
             <h1 className="comparison-title">Compara todos los planes</h1>
             <br />
- 
+
             {/* --- TABLA DE COMPARACIÓN --- */}
             <div className="comparison-table">
                 <div className="compare-column features-column">
@@ -141,10 +141,10 @@ function Advertise() {
                     </ul>
                 </div>
             </div>
- 
+
             <FAQSection />
         </section>
     );
 }
- 
+
 export default Advertise;

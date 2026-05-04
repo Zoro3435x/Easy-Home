@@ -37,7 +37,7 @@ const postulacionService = {
       // TODO: Implementar cuando el endpoint esté disponible
       // const response = await apiClient.get('/api/v1/postulaciones/');
       // return response.data;
-      
+
       throw new Error('Endpoint no disponible');
     } catch (error) {
       throw error.response?.data || error.message;
@@ -49,12 +49,12 @@ const postulacionService = {
    * @param {number} id - ID de la postulación
    * @returns {Promise} Promise con los datos de la postulación
    */
-  getById: async (id) => {
+  getById: async (_id) => {
     try {
       // TODO: Implementar cuando el endpoint esté disponible
       // const response = await apiClient.get(`/api/v1/postulaciones/${id}`);
       // return response.data;
-      
+
       throw new Error('Endpoint no disponible');
     } catch (error) {
       throw error.response?.data || error.message;
@@ -69,12 +69,12 @@ const postulacionService = {
    * @param {string} updateData.comentarios - Comentarios opcionales
    * @returns {Promise} Promise con la postulación actualizada
    */
-  actualizarEstado: async (id, updateData) => {
+  actualizarEstado: async (_id, _updateData) => {
     try {
       // TODO: Implementar cuando el endpoint esté disponible
       // const response = await apiClient.patch(`/api/v1/postulaciones/${id}/estado`, updateData);
       // return response.data;
-      
+
       throw new Error('Endpoint no disponible');
     } catch (error) {
       throw error.response?.data || error.message;
@@ -86,12 +86,12 @@ const postulacionService = {
    * @param {number} id - ID de la postulación
    * @returns {Promise} Promise con la confirmación de eliminación
    */
-  eliminar: async (id) => {
+  eliminar: async (_id) => {
     try {
       // TODO: Implementar cuando el endpoint esté disponible
       // const response = await apiClient.delete(`/api/v1/postulaciones/${id}`);
       // return response.data;
-      
+
       throw new Error('Endpoint no disponible');
     } catch (error) {
       throw error.response?.data || error.message;

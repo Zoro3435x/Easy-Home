@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+
 from .base import Base
 from .property import Publicacion_Etiqueta
 
@@ -9,6 +10,7 @@ from .property import Publicacion_Etiqueta
 # Descripción: Catálogo de etiquetas que se pueden asociar a las publicaciones
 # de servicios para facilitar su búsqueda y categorización.
 # ────────────────────────────────────────────────
+
 
 class Etiqueta(Base):
     __tablename__ = "etiqueta"
@@ -20,5 +22,5 @@ class Etiqueta(Base):
     publicacion_servicio = relationship(
         "Publicacion_Servicio",
         secondary=Publicacion_Etiqueta,
-        back_populates="etiqueta"
+        back_populates="etiqueta",
     )

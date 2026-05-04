@@ -4,7 +4,6 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models.user import Usuario
 
-
 TIPO_USUARIO_TO_GROUP = {
     "administrador": "Admin",
     "proveedor": "Trabajadores",
@@ -49,7 +48,9 @@ def require_roles(*allowed_roles: str):
     """
 
     def role_guard(current_user: Usuario = Depends(get_current_user)) -> Usuario:
-        user_group = TIPO_USUARIO_TO_GROUP.get((current_user.tipo_usuario or "").lower())
+        user_group = TIPO_USUARIO_TO_GROUP.get(
+            (current_user.tipo_usuario or "").lower()
+        )
         if user_group not in allowed_roles:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,

@@ -15,7 +15,7 @@ function Footer() {
     };
 
   return (
-    
+
     <footer className="app-footer">
       <div className="contenido-footer">
         <div className = "contacto">

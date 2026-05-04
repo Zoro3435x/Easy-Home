@@ -6,7 +6,7 @@ import { getUserCapabilities } from '../utils/authUtils';
  */
 export const useUserCapabilities = () => {
   const auth = useAuth();
-  
+
   if (!auth.isAuthenticated || !auth.user) {
     return {
       canCreatePublication: false,

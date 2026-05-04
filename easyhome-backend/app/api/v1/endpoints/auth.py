@@ -1,12 +1,14 @@
 # app/api/v1/endpoints/auth.py
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from pydantic import BaseModel, EmailStr
-from datetime import datetime
-from app.core.database import get_db
-from app.models.user import Usuario, Proveedor_Servicio
-from app.services.cognito_service import cognito_service
 import logging
+from datetime import datetime
+
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel, EmailStr
+from sqlalchemy.orm import Session
+
+from app.core.database import get_db
+from app.models.user import Proveedor_Servicio, Usuario
+from app.services.cognito_service import cognito_service
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -26,7 +28,7 @@ def sync_cognito_user(user_data: CognitoUserSync, db: Session = Depends(get_db))
     Sincroniza un usuario de Cognito con la base de datos local.
     Si el usuario ya existe, actualiza su última sesión.
     Si no existe, lo crea.
-    
+
     IMPORTANTE: Si el usuario no tiene grupos en Cognito, se le asigna automáticamente al grupo "Clientes"
     """
 
@@ -39,22 +41,29 @@ def sync_cognito_user(user_data: CognitoUserSync, db: Session = Depends(get_db))
         user_data.name = cognito_attrs.get("name") or user_data.name
         user_data.phone = cognito_attrs.get("phone_number") or user_data.phone
         user_data.cognito_sub = cognito_attrs.get("sub") or user_data.cognito_sub
-        logger.info(f"Atributos sincronizados desde Cognito para {user_data.email}: {cognito_attrs}")
+        logger.info(
+            f"Atributos sincronizados desde Cognito para {user_data.email}: {cognito_attrs}"
+        )
     else:
         logger.warning(f"No se pudieron obtener atributos para {user_data.email}")
 
     # ORIGINAL: búsqueda del usuario en la base de datos
-    existing_user = db.query(Usuario).filter(Usuario.correo_electronico == user_data.email).first()
+    existing_user = (
+        db.query(Usuario).filter(Usuario.correo_electronico == user_data.email).first()
+    )
     if not existing_user and user_data.cognito_sub:
-        existing_user = db.query(Usuario).filter(Usuario.google_id == user_data.cognito_sub).first()
+        existing_user = (
+            db.query(Usuario).filter(Usuario.google_id == user_data.cognito_sub).first()
+        )
 
     # ORIGINAL: asegurar grupo por defecto
     groups_assigned = cognito_service.ensure_user_has_default_group(
-        username=user_data.email,
-        current_groups=user_data.cognito_groups
+        username=user_data.email, current_groups=user_data.cognito_groups
     )
 
-    if groups_assigned and (not user_data.cognito_groups or len(user_data.cognito_groups) == 0):
+    if groups_assigned and (
+        not user_data.cognito_groups or len(user_data.cognito_groups) == 0
+    ):
         # Si no se especificaron grupos, usamos el grupo por defecto.
         user_data.cognito_groups = cognito_service.get_user_groups(user_data.email)
         logger.info(f"Usuario {user_data.email} asignado al grupo por defecto")
@@ -71,14 +80,14 @@ def sync_cognito_user(user_data: CognitoUserSync, db: Session = Depends(get_db))
 
         db.commit()
         db.refresh(existing_user)
-        
+
         return {
             "message": "Usuario actualizado",
             "user_id": existing_user.id_usuario,
             "is_new": False,
-            "groups": user_data.cognito_groups
+            "groups": user_data.cognito_groups,
         }
-    
+
     # ORIGINAL: determinar tipo de usuario basado en grupos
     tipo_usuario = "cliente"
     if "Admin" in user_data.cognito_groups:
@@ -87,10 +96,12 @@ def sync_cognito_user(user_data: CognitoUserSync, db: Session = Depends(get_db))
         tipo_usuario = "proveedor"
     elif "Clientes" in user_data.cognito_groups:
         tipo_usuario = "cliente"
-    
+
     # ORIGINAL + AJUSTE: creación del nuevo usuario
     new_user = Usuario(
-        nombre=(user_data.name or user_data.email.split('@')[0]).strip(),  # NUEVO: strip()
+        nombre=(
+            user_data.name or user_data.email.split("@")[0]
+        ).strip(),  # NUEVO: strip()
         correo_electronico=user_data.email,
         contraseña="",  # No se necesita contraseña (usa Cognito)
         numero_telefono=user_data.phone,
@@ -99,18 +110,18 @@ def sync_cognito_user(user_data: CognitoUserSync, db: Session = Depends(get_db))
         metodo_autenticacion="cognito",
         google_id=user_data.cognito_sub,
         fecha_registro=datetime.now(),
-        ultima_sesion=datetime.now()
+        ultima_sesion=datetime.now(),
     )
-    
+
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    
+
     return {
         "message": "Usuario creado exitosamente",
         "user_id": new_user.id_usuario,
         "is_new": True,
-        "groups": user_data.cognito_groups
+        "groups": user_data.cognito_groups,
     }
 
 
@@ -122,16 +133,20 @@ def get_user_info(email: str, db: Session = Depends(get_db)):
     """
     # ORIGINAL: búsqueda de usuario
     user = db.query(Usuario).filter(Usuario.correo_electronico == email).first()
-    
+
     if not user:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
-    
+
     # ORIGINAL: búsqueda de proveedor aprobado
-    proveedor = db.query(Proveedor_Servicio).filter(
-        Proveedor_Servicio.id_proveedor == user.id_usuario,
-        Proveedor_Servicio.estado_solicitud == "aprobado"
-    ).first()
-    
+    proveedor = (
+        db.query(Proveedor_Servicio)
+        .filter(
+            Proveedor_Servicio.id_proveedor == user.id_usuario,
+            Proveedor_Servicio.estado_solicitud == "aprobado",
+        )
+        .first()
+    )
+
     response = {
         "id_usuario": user.id_usuario,
         "nombre": user.nombre,
@@ -142,7 +157,7 @@ def get_user_info(email: str, db: Session = Depends(get_db)):
         "estado_cuenta": user.estado_cuenta,
         "fecha_registro": user.fecha_registro,
         "ultima_sesion": user.ultima_sesion,
-        "id_proveedor": proveedor.id_proveedor if proveedor else None
+        "id_proveedor": proveedor.id_proveedor if proveedor else None,
     }
-    
+
     return response

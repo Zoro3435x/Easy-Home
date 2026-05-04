@@ -795,26 +795,26 @@
   .solicitudes-grid {
     justify-content: center;
   }
-  
+
   .solicitud-card {
     flex: 0 1 400px;
     max-width: 400px;
   }
-  
+
   .fotos-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
-  
+
   .section-header-with-action {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-  
+
   .btn-reload-fotos {
     width: 100%;
   }
-  
+
   .fotos-header {
     flex-direction: column;
     gap: 0.5rem;
@@ -865,7 +865,7 @@
   .modal-footer button {
     width: 100%;
   }
-  
+
   .fotos-grid {
     grid-template-columns: repeat(2, 1fr);
   }

@@ -100,8 +100,8 @@ function MisServicios({ idProveedor }) {
               {/* Imagen principal */}
               <div className="servicio-imagen">
                 {servicio.imagen_publicacion && servicio.imagen_publicacion.length > 0 ? (
-                  <img 
-                    src={servicio.imagen_publicacion[0].url_imagen} 
+                  <img
+                    src={servicio.imagen_publicacion[0].url_imagen}
                     alt={servicio.titulo}
                   />
                 ) : (
@@ -116,18 +116,18 @@ function MisServicios({ idProveedor }) {
               <div className="servicio-info">
                 <h3>{servicio.titulo}</h3>
                 <p className="descripcion">{servicio.descripcion}</p>
-                
+
                 <div className="precio-rango">
                   <span className="precio">
-                    ${Number(servicio.rango_precio_min).toFixed(2)} - 
+                    ${Number(servicio.rango_precio_min).toFixed(2)} -
                     ${Number(servicio.rango_precio_max).toFixed(2)}
                   </span>
                 </div>
 
                 <div className="stats">
                   <span className="stat">
-                    ⭐ {servicio.calificacion_promedio_publicacion ? 
-                      Number(servicio.calificacion_promedio_publicacion).toFixed(1) : 
+                    ⭐ {servicio.calificacion_promedio_publicacion ?
+                      Number(servicio.calificacion_promedio_publicacion).toFixed(1) :
                       'Sin calificación'}
                   </span>
                   <span className="stat">

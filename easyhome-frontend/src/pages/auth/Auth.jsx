@@ -52,9 +52,9 @@ function Auth() {
     };
 
   return (
-    <div style={{ 
-      maxWidth: '400px', 
-      margin: '50px auto', 
+    <div style={{
+      maxWidth: '400px',
+      margin: '50px auto',
       padding: '20px',
       border: '1px solid #ddd',
       borderRadius: '8px'
@@ -62,10 +62,10 @@ function Auth() {
       <h2 style={{ textAlign: 'center' }}>
         {isLogin ? 'Iniciar Sesión' : 'Registrarse'}
       </h2>
-      
+
       <p style={{ textAlign: 'center', color: '#666', marginBottom: '20px' }}>
-        {isLogin 
-          ? 'Ingresa a tu cuenta de EasyHome' 
+        {isLogin
+          ? 'Ingresa a tu cuenta de EasyHome'
           : 'Crea tu cuenta en EasyHome'}
       </p>
 
@@ -89,8 +89,8 @@ function Auth() {
       </button>
 
       {/* Separador */}
-      <div style={{ 
-        textAlign: 'center', 
+      <div style={{
+        textAlign: 'center',
         margin: '20px 0',
         color: '#999'
       }}>
@@ -111,7 +111,7 @@ function Auth() {
             fontSize: '14px'
           }}
         />
-        
+
         <input
           type="password"
           placeholder="Contraseña"
@@ -189,7 +189,7 @@ function Auth() {
         borderRadius: '4px',
         fontSize: '12px'
       }}>
-        <strong>📝 Nota del equipo:</strong> Este es un componente básico. 
+        <strong>📝 Nota del equipo:</strong> Este es un componente básico.
         El equipo de desarrollo implementará la lógica de autenticación completa.
       </div>
     </div>
