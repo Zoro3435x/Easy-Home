@@ -5,11 +5,11 @@ import { useAuth } from '../contexts/AuthContext';
 import servicePublicationService from '../services/servicePublicationService';
  
  
-function PublicarServicio() {
+function PublicarServicio({ onClose: _onClose = null, onSuccess = null }) {
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [categories, setCategories] = useState([]);
-    const [loadingCategories, setLoadingCategories] = useState(true);
+    const [_loadingCategories, setLoadingCategories] = useState(true);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [titulo, setTitulo] = useState('');
     const [descripcion, setDescripcion] = useState('');
@@ -17,18 +17,8 @@ function PublicarServicio() {
     const [loading, setLoading] = useState(false);
    
     const auth = useAuth();
-    if (auth.isLoading) {
-    return <p>Cargando autenticación...</p>;
-    }
- 
-    if (!auth.isAuthenticated || !auth.user || !auth.user.profile) {
-    return <p>No has iniciado sesión. Por favor inicia sesión para publicar un servicio.</p>;
-    }
- 
-    const userEmail = auth.user.profile.email || '';
- 
-     //Cargar categorías existentes
- 
+
+    // Cargar categorías existentes - HOOK DEBE ESTAR AL INICIO
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -40,10 +30,18 @@ function PublicarServicio() {
                 setLoadingCategories(false);
             }
         };
- 
+
         fetchCategories();
- 
     }, []); // El array vacío asegura que se ejecuta solo una vez al montar
+
+    // EARLY RETURNS DESPUÉS DE LOS HOOKS
+    if (auth.loading) {
+        return <p>Cargando autenticación...</p>;
+    }
+
+    if (!auth.isAuthenticated || !auth.user || !auth.user.profile) {
+        return <p>No has iniciado sesión. Por favor inicia sesión para publicar un servicio.</p>;
+    }
  
  
     const handleFileChange = (e) => {
@@ -93,7 +91,7 @@ function PublicarServicio() {
         }
  
         setLoading(true); // Inicia el estado de carga
- 
+
         try {
             // Crear el FormData
             const formData = new FormData();
@@ -103,18 +101,18 @@ function PublicarServicio() {
             formData.append("descripcion", descripcion);
             formData.append("rango_precio_min", String(minPrice));
             formData.append("rango_precio_max", String(maxPrice));
- 
+
             // Adjuntar fotos
             fotos.forEach((file) => {
             formData.append("fotos", file);
             });
- 
+
             // Llamada al servicio
             const response = await servicePublicationService.createPublication(formData);
- 
+
             // Mostrar mensaje inmediato
             alert(`Servicio "${response.titulo}" publicado con éxito.`);
- 
+
             // Resetear campos
             setTitulo("");
             setDescripcion("");
@@ -122,10 +120,14 @@ function PublicarServicio() {
             setMinPrice("");
             setMaxPrice("");
             setFotos([]);
- 
+
+            // Llamar a callback de éxito si existe
+            if (onSuccess) {
+                onSuccess();
+            }
         } catch (error) {
             console.error("Error al crear la publicación:", error);
- 
+
             let errorMessage = "Error desconocido.";
             if (error.response?.data?.detail && Array.isArray(error.response.data.detail)) {
             const validationErrors = error.response.data.detail
@@ -135,7 +137,7 @@ function PublicarServicio() {
             } else if (error.message) {
             errorMessage = error.message;
             }
- 
+
             alert(`Fallo de envío:\n${errorMessage}`);
         } finally {
             setLoading(false);
