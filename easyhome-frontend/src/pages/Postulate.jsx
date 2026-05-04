@@ -9,7 +9,8 @@ import '../assets/styles/postulate.css';
 const Postulate = () => {
   const navigate = useNavigate();
   const auth = useAuth();
-  const { crearPostulacion, loading, error, success } = usePostulacion();
+  const { crearPostulacion, loading, error } = usePostulacion();
+  const [formError, setFormError] = useState(null);
 
   // Estados del formulario
   const [formData, setFormData] = useState({
@@ -144,69 +145,41 @@ const Postulate = () => {
     setImagePreviews(prev => prev.filter((_, i) => i !== index));
   };
 
-  // Validar formulario
+  // Validar formulario — devuelve el mensaje de error o null si todo está OK
   const validateForm = () => {
-    if (!formData.curp.trim()) {
-      alert('El CURP es obligatorio');
-      return false;
-    }
-
-    // Validar formato CURP (18 caracteres)
-    if (formData.curp.length !== 18) {
-      alert('El CURP debe tener 18 caracteres');
-      return false;
-    }
-
-    if (!formData.direccion.trim()) {
-      alert('La dirección es obligatoria');
-      return false;
-    }
-
-    if (!formData.anios_experiencia) {
-      alert('Por favor selecciona tus años de experiencia');
-      return false;
-    }
-
-    if (!formData.descripcion_servicios.trim()) {
-      alert('Por favor describe los servicios que ofreces');
-      return false;
-    }
-
-    if (formData.servicios_ofrece.length === 0) {
-      alert('Por favor selecciona al menos un servicio');
-      return false;
-    }
-
-    if (formData.fotos.length === 0) {
-      alert('Por favor sube al menos una evidencia fotográfica de tu trabajo');
-      return false;
-    }
-
-    return true;
+    if (!formData.curp.trim()) return 'El CURP es obligatorio';
+    if (formData.curp.trim().length !== 18) return 'El CURP debe tener 18 caracteres';
+    if (!formData.direccion.trim()) return 'La dirección es obligatoria';
+    if (!formData.anios_experiencia) return 'Por favor selecciona tus años de experiencia';
+    if (!formData.descripcion_servicios.trim()) return 'Por favor describe los servicios que ofreces';
+    if (formData.servicios_ofrece.length === 0) return 'Por favor selecciona al menos un servicio';
+    if (formData.fotos.length === 0) return 'Por favor sube al menos una evidencia fotográfica de tu trabajo';
+    return null;
   };
 
   // Manejar envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormError(null);
 
-    if (!validateForm()) {
+    const validationError = validateForm();
+    if (validationError) {
+      setFormError(validationError);
       return;
     }
 
     try {
-      // Preparar datos para enviar
       const postulacionData = {
         ...formData,
         user_email: auth.user?.profile?.email || auth.user?.email,
         nombre_completo: auth.user?.profile?.name || auth.user?.name || '',
       };
-      
+
       await crearPostulacion(postulacionData);
-      alert('¡Postulación enviada exitosamente! Te contactaremos pronto.');
       navigate('/');
     } catch (err) {
+      // El mensaje ya queda en `error` del hook — no hace falta hacer nada más aquí
       console.error('Error al enviar postulación:', err);
-      alert('Error al enviar la postulación. Por favor intenta nuevamente.');
     }
   };
 
@@ -335,16 +308,17 @@ const Postulate = () => {
             </div>
           </section>
 
-          {/* Mensajes de error o éxito */}
-          {error && (
+          {/* Errores de validación del cliente */}
+          {formError && (
             <div className="alert alert-error">
-              {error}
+              {formError}
             </div>
           )}
 
-          {success && (
-            <div className="alert alert-success">
-              ¡Postulación enviada exitosamente!
+          {/* Errores del servidor */}
+          {error && (
+            <div className="alert alert-error">
+              {error}
             </div>
           )}
 

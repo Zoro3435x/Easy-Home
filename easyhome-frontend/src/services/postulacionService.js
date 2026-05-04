@@ -19,7 +19,12 @@ const postulacionService = {
 
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      const detail =
+        error.response?.data?.detail ||
+        error.response?.data?.message ||
+        error.message ||
+        'Error al enviar la solicitud';
+      throw new Error(detail);
     }
   },
 

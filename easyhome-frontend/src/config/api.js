@@ -2,6 +2,16 @@ import axios from 'axios';
 
 // Configuración base de la API
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const AUTH_USER_STORAGE_KEY = 'easyhome_auth_user';
+
+const getStoredAuthUser = () => {
+  try {
+    const raw = localStorage.getItem(AUTH_USER_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+};
 
 // Crear instancia de axios con configuración base
 const apiClient = axios.create({
@@ -20,6 +30,19 @@ apiClient.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    const authUser = getStoredAuthUser();
+    const email = authUser?.profile?.email || authUser?.email;
+    const groups = authUser?.groups || authUser?.profile?.['cognito:groups'] || [];
+
+    if (email) {
+      config.headers['X-User-Email'] = email;
+    }
+
+    if (Array.isArray(groups) && groups.length > 0) {
+      config.headers['X-User-Roles'] = groups.join(',');
+    }
+
     return config;
   },
   (error) => {
@@ -40,7 +63,7 @@ apiClient.interceptors.response.use(
         case 401:
           // No autorizado - redirigir a login
           console.error('No autorizado. Por favor inicia sesión.');
-          // Aquí puedes agregar lógica para redirigir al login
+          localStorage.removeItem(AUTH_USER_STORAGE_KEY);
           break;
         case 403:
           console.error('Acceso prohibido.');

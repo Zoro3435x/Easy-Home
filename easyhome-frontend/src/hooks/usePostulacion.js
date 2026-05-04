@@ -62,8 +62,7 @@ const usePostulacion = () => {
       return response;
 
     } catch (err) {
-      const errorMessage = err.response?.data?.detail || err.message || 'Error al crear la postulación';
-      setError(errorMessage);
+      setError(err.message || 'Error al crear la postulación');
       setLoading(false);
       throw err;
     }
