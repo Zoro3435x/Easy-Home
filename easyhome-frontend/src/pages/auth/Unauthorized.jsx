@@ -1,10 +1,10 @@
 function Unauthorized() {
   return (
-    <div style={{ 
-      display: 'flex', 
+    <div style={{
+      display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center', 
-      alignItems: 'center', 
+      justifyContent: 'center',
+      alignItems: 'center',
       height: '100vh',
       textAlign: 'center',
       padding: '20px'
@@ -15,7 +15,7 @@ function Unauthorized() {
         No tienes los permisos necesarios para acceder a esta página.
         Por favor, contacta al administrador si crees que esto es un error.
       </p>
-      <button 
+      <button
         onClick={() => window.location.href = '/'}
         style={{
           marginTop: '20px',

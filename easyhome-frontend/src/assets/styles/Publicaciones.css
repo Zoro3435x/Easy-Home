@@ -6,7 +6,7 @@
     margin-bottom: 30px;
     max-width: 780px; /* Ancho ajustado */
     background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     font-family: Arial, sans-serif;
     margin-left: 0; /* Centrar la tarjeta */
     margin-right: auto; /* Centrar la tarjeta */
@@ -32,7 +32,7 @@
     border-radius: 50%;
     margin-right: 15px;
     object-fit: cover;
-    border: 1px solid #e0e0e0; 
+    border: 1px solid #e0e0e0;
 }
 
 .perfil-nombre {
@@ -69,7 +69,7 @@
     font-size: 0.8em;
     align-self: flex-start;
     font-size: 1.1em;
-    font-family: 'Nunito Sans', sans-serif; 
+    font-family: 'Nunito Sans', sans-serif;
     font-weight: 400;
 }
 
@@ -154,18 +154,18 @@
 
 .boton-perfil:hover {
     background-color: #385D74;
-    color: #ffffff; 
+    color: #ffffff;
 }
 
 /* --- TÍTULO DE SECCIÓN ("Servicios") --- */
 .section-title {
     margin-bottom: 25px;
-    
-    max-width: 780px; 
+
+    max-width: 780px;
     margin-left: 0;
     margin-right: auto;
-    
-    padding-left: 20px; 
+
+    padding-left: 20px;
 
     /* --> AÑADE O MODIFICA ESTOS ESTILOS */
     font-size: 2.5em; /* Tamaño de fuente grande */
@@ -173,5 +173,5 @@
     color: #333333; /* Color oscuro */
     text-align: left; /* Aseguramos que se alinee a la izquierda */
     margin-top: 50px;
-    
+
 }

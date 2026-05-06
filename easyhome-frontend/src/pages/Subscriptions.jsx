@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import "../assets/styles/Subscriptions.css"
- 
+
 function CheckIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24"
@@ -20,7 +20,7 @@ function CheckIcon() {
     </svg>
   );
 }
- 
+
 function CircleXIcon({ size = 24, color = "#dc3545", className = "" }) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={color} className={`icon icon-tabler icons-tabler-filled icon-tabler-circle-x ${className}`}>
@@ -29,10 +29,10 @@ function CircleXIcon({ size = 24, color = "#dc3545", className = "" }) {
     </svg>
   );
 }
- 
- 
+
+
 // Iconos de Preguntas Frecuentes
- 
+
 function ExchangeIcon() {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="faq-icon">
@@ -40,7 +40,7 @@ function ExchangeIcon() {
         </svg>
     );
 }
- 
+
 function ReceiptIcon() {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -50,7 +50,7 @@ function ReceiptIcon() {
           <path d="M12 6v10" /></svg>
     );
 }
- 
+
 function TaxIcon() {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -60,8 +60,8 @@ function TaxIcon() {
           <path d="M14 11h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" /><path d="M12 10v1" /><path d="M12 17v1" /></svg>
     );
 }
- 
- 
+
+
 function CancelIcon() {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -70,7 +70,7 @@ function CancelIcon() {
         <path d="M18.364 5.636l-12.728 12.728" /></svg>
     );
 }
- 
+
 function FAQSection() {
   // Lista de preguntas y respuestas
   const faqData = [
@@ -99,22 +99,22 @@ function FAQSection() {
       answer: 'Sí, puedes cancelar tu suscripción sin penalizaciones en cualquier momento. La cancelación será efectiva al final de tu ciclo de facturación actual.'
     },
   ];
- 
+
   // Estado para controlar qué pregunta está abierta
   const [activeIndex, setActiveIndex] = useState(null);
- 
+
   const toggleFAQ = (id) => {
     setActiveIndex(activeIndex === id ? null : id);
   };
- 
+
   return (
     <section className="faq-section">
       <h2 className="faq-title">Preguntas Frecuentes</h2>
-     
+
       <div className="faq-accordion">
         {faqData.map((item) => (
           <div key={item.id} className={`faq-item ${activeIndex === item.id ? 'active' : ''}`}>
-           
+
             {/* Cabecera de la Pregunta */}
             <button
               className="faq-question-header"
@@ -127,7 +127,7 @@ function FAQSection() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </span>
             </button>
-           
+
             {/* Contenido de la Respuesta (Se despliega/pliega) */}
             <div className="faq-answer-content">
               <p>{item.answer}</p>
@@ -138,18 +138,11 @@ function FAQSection() {
     </section>
   );
 }
- 
+
 function Subscriptions() {
- 
-  const [openIndex, setOpenIndex] = useState(null);
- 
-    const togglePanel = (index) => {
-        setOpenIndex(openIndex === index ? null : index);
-    };
- 
   return (
     <div className="subscriptions-page">
- 
+
       {/* Seccion planes de suscripción */}
       <br /><br />
       <h1>Encuentra el Plan Perfecto para Ti</h1>
@@ -170,7 +163,7 @@ function Subscriptions() {
             </ul>
             <button className="card-button">Comenzar Ahora</button>
         </div>
- 
+
         {/* Plan Esencial */}
         <div className="pricing-card">
             <div className="card-header">Esencial</div>
@@ -184,7 +177,7 @@ function Subscriptions() {
             </ul>
             <button className="card-button">Comenzar Ahora</button>
         </div>
- 
+
         {/* Plan Premium */}
         <div className="pricing-card">
             <div className="card-header">Premium</div>
@@ -199,12 +192,12 @@ function Subscriptions() {
             <button className="card-button">Comenzar Ahora</button>
         </div>
       </div>
- 
+
       <br />
       <h1 className="comparison-title">Compara todos los planes</h1>
       <br />
       <div className="comparison-table">
-       
+
         {/* Columna de Características */}
         <div className="compare-column features-column">
           <h2>Características</h2>
@@ -215,7 +208,7 @@ function Subscriptions() {
             <li>Acceso a reportes de demanda</li>
           </ul>
         </div>
- 
+
         {/* Columna Básico */}
         <div className="compare-column compare-plan-column">
           <div className="compare-header">
@@ -230,7 +223,7 @@ function Subscriptions() {
             <li><CircleXIcon /></li>
           </ul>
         </div>
- 
+
         {/* Columna Esencial */}
         <div className="compare-column compare-plan-column highlighted">
           <span className="popular-tag">Más popular</span>
@@ -246,7 +239,7 @@ function Subscriptions() {
             <li><CircleXIcon /></li>
           </ul>
         </div>
- 
+
         {/* Columna Premium */}
         <div className="compare-column compare-plan-column">
           <div className="compare-header">
@@ -262,12 +255,12 @@ function Subscriptions() {
           </ul>
         </div>
       </div>
-     
+
       {/* Sección preguntas frecuentes */}
       <FAQSection />
- 
+
     </div>
   );
 }
- 
+
 export default Subscriptions;

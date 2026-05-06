@@ -3,7 +3,7 @@ import './Button.css';
 
 /**
  * Componente Button reutilizable
- * 
+ *
  * @param {string} variant - Estilo del botón: 'primary', 'secondary', 'success', 'danger', 'outline'
  * @param {string} size - Tamaño del botón: 'small', 'medium', 'large'
  * @param {boolean} fullWidth - Si el botón debe ocupar todo el ancho
@@ -12,9 +12,9 @@ import './Button.css';
  * @param {string} type - Tipo de botón HTML: 'button', 'submit', 'reset'
  * @param {boolean} disabled - Si el botón está deshabilitado
  */
-function Button({ 
-  variant = 'primary', 
-  size = 'medium', 
+function Button({
+  variant = 'primary',
+  size = 'medium',
   fullWidth = false,
   onClick,
   children,

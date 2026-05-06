@@ -45,7 +45,7 @@ function CambiarDatos({ userData, splitName, calculateAge }) {
       // Aquí iría la lógica para actualizar el backend
       // Por ahora solo simulamos el guardado
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       setMensaje({ type: 'success', text: 'Datos actualizados correctamente' });
       setModoEdicion(false); // Volver a modo lectura después de guardar
     } catch (error) {
@@ -159,9 +159,9 @@ function CambiarDatos({ userData, splitName, calculateAge }) {
         <div className="form-actions">
           {modoEdicion ? (
             <>
-              <button 
-                type="button" 
-                className="btn-cancelar" 
+              <button
+                type="button"
+                className="btn-cancelar"
                 onClick={handleCancelar}
                 disabled={guardando}
               >
@@ -173,9 +173,9 @@ function CambiarDatos({ userData, splitName, calculateAge }) {
               </button>
             </>
           ) : (
-            <button 
-              type="button" 
-              className="btn-editar" 
+            <button
+              type="button"
+              className="btn-editar"
               onClick={handleEditar}
             >
               Editar

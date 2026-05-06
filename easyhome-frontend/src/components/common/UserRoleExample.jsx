@@ -17,15 +17,15 @@ function UserRoleExample() {
   return (
     <div style={{ padding: '20px' }}>
       <h2>Información del Usuario</h2>
-      
+
       <div>
         <strong>Email:</strong> {auth.user?.profile?.email}
       </div>
-      
+
       <div>
         <strong>Rol Principal:</strong> {userRole || 'Sin rol'}
       </div>
-      
+
       <div>
         <strong>Grupos:</strong> {userGroups.join(', ') || 'Ninguno'}
       </div>
@@ -33,15 +33,15 @@ function UserRoleExample() {
       <hr />
 
       <h3>Verificaciones de Roles:</h3>
-      
+
       <div>
         <strong>¿Es Admin?</strong> {isAdmin(auth.user) ? 'Sí ✅' : 'No ❌'}
       </div>
-      
+
       <div>
         <strong>¿Es Trabajador?</strong> {isWorker(auth.user) ? 'Sí ✅' : 'No ❌'}
       </div>
-      
+
       <div>
         <strong>¿Es Cliente?</strong> {isClient(auth.user) ? 'Sí ✅' : 'No ❌'}
       </div>

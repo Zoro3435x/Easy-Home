@@ -11,7 +11,7 @@ function AdminCategories() {
   const [editingCategory, setEditingCategory] = useState(null);
   const [categoryToDelete, setCategoryToDelete] = useState(null);
   const [deletingCategory, setDeletingCategory] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     nombre_categoria: '',
     descripcion: '',
@@ -60,10 +60,10 @@ function AdminCategories() {
       }
 
       setFormSuccess(true);
-      
+
       // Recargar categorías
       await fetchCategories();
-      
+
       // Cerrar modal después de 1.5 segundos
       setTimeout(() => {
         handleCloseModal();
@@ -130,10 +130,10 @@ function AdminCategories() {
     try {
       setDeletingCategory(true);
       await categoryService.delete(categoryToDelete.id_categoria);
-      
+
       // Recargar categorías
       await fetchCategories();
-      
+
       // Cerrar modal
       handleCloseDeleteModal();
     } catch (err) {
@@ -190,7 +190,7 @@ function AdminCategories() {
     <div className="admin-categories">
       <div className="admin-header">
         <h1>Gestión de Categorías</h1>
-        <button 
+        <button
           className="btn-add-category"
           onClick={handleOpenCreateModal}
         >
@@ -200,9 +200,9 @@ function AdminCategories() {
 
       <div className="categories-list">
         <h2>Categorías Existentes ({categories.length})</h2>
-        
+
         {error && <div className="error-message">{error}</div>}
-        
+
         {categories.length === 0 ? (
           <p className="no-categories">No hay categorías registradas</p>
         ) : (
@@ -228,8 +228,8 @@ function AdminCategories() {
                     </td>
                     <td>
                       {category.icono_url ? (
-                        <img 
-                          src={category.icono_url} 
+                        <img
+                          src={category.icono_url}
                           alt={category.nombre_categoria}
                           className="category-icon-preview"
                         />
@@ -270,7 +270,7 @@ function AdminCategories() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
               </button>
             </div>
-            
+
             <div className="modal-body">
               <form onSubmit={handleSubmit} className="category-form">
                 <div className="form-group">
@@ -362,7 +362,7 @@ function AdminCategories() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
               </button>
             </div>
-            
+
             <div className="confirm-modal-body">
               <div className="confirm-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-alert-triangle"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 1.67c.955 0 1.845 .467 2.39 1.247l.105 .16l8.114 13.548a2.914 2.914 0 0 1 -2.307 4.363l-.195 .008h-16.225a2.914 2.914 0 0 1 -2.582 -4.2l.099 -.185l8.11 -13.538a2.914 2.914 0 0 1 2.491 -1.403zm.01 13.33l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -7a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z" /></svg></div>
               <h3>¿Estás seguro?</h3>
@@ -376,17 +376,17 @@ function AdminCategories() {
             </div>
 
             <div className="confirm-modal-footer">
-              <button 
-                type="button" 
-                className="btn-confirm-cancel" 
+              <button
+                type="button"
+                className="btn-confirm-cancel"
                 onClick={handleCloseDeleteModal}
                 disabled={deletingCategory}
               >
                 Cancelar
               </button>
-              <button 
-                type="button" 
-                className="btn-confirm-delete" 
+              <button
+                type="button"
+                className="btn-confirm-delete"
                 onClick={handleConfirmDelete}
                 disabled={deletingCategory}
               >

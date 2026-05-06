@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, Text, DECIMAL, TIMESTAMP
-from sqlalchemy.sql import func
+from sqlalchemy import DECIMAL, TIMESTAMP, Column, Integer, String, Text
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+
 from .base import Base
 
 # ────────────────────────────────────────────────
@@ -8,6 +9,7 @@ from .base import Base
 # Referencia: SRS 3.4.2.13 (RF-24 al RF-26)
 # Descripción: Catálogo de paquetes publicitarios disponibles para empresas externas. Define tipo, duración, precio y estado del paquete.
 # ────────────────────────────────────────────────
+
 
 class Paquete_Publicidad(Base):
     __tablename__ = "paquete_publicidad"
@@ -22,4 +24,8 @@ class Paquete_Publicidad(Base):
     fecha_actualizacion = Column(TIMESTAMP, nullable=True)
 
     # Relaciones
-    solicitud_paquete_publicitario = relationship("Solicitud_Paquete_Publicitario", back_populates="paquete_publicidad", cascade="all, delete")
+    solicitud_paquete_publicitario = relationship(
+        "Solicitud_Paquete_Publicitario",
+        back_populates="paquete_publicidad",
+        cascade="all, delete",
+    )

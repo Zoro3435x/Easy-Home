@@ -2,19 +2,20 @@
 import { useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 export const useCognitoSync = () => {
   const auth = useAuth();
 
   useEffect(() => {
     const syncUser = async () => {
-      if (auth.isAuthenticated && auth.user) {
+      if (auth.isAuthenticated && auth.user?.profile?.email) {
         try {
+          const email = auth.user.profile.email;
           const userData = {
-            email: auth.user.profile.email,
-            cognito_sub: auth.user.profile.sub,
-            name: auth.user.profile.name || auth.user.profile.email.split('@')[0],
+            email,
+            cognito_sub: auth.user.profile.sub || `local-${email}`,
+            name: auth.user.profile.name || email.split('@')[0],
             phone: auth.user.profile.phone_number || null,
             cognito_groups: auth.user.profile['cognito:groups'] || []
           };

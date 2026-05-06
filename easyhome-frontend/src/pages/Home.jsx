@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import HeroSection from '../components/features/HeroSection'
@@ -9,7 +8,6 @@ import "../assets/styles/postulate.css"
 import "../assets/styles/como_funciona.css"
 
 function Home() {
-  const [count, setCount] = useState(0)
   const navigate = useNavigate()
   const auth = useAuth()
 
@@ -28,12 +26,12 @@ function Home() {
     <>
       <HeroSection />
       <Categories />
-      
+
       <div className="home-container">
         {/* Sección: Cómo Funciona */}
         <section className="how-it-works-section">
           <h2 className="process-title">¿Cómo funciona Easy Home?</h2>
-          
+
           <div className="process-steps">
             {/* Paso 1 */}
             <div className="step-card">
@@ -130,12 +128,12 @@ function Home() {
               ¿Eres un profesional de servicios? Únete a Easy Home
             </h2>
             <p className="cta-description">
-              Conectamos directamente a expertos locales como tú con clientes que 
-              necesitan servicios de carpintería, fontanería, limpieza para sus 
+              Conectamos directamente a expertos locales como tú con clientes que
+              necesitan servicios de carpintería, fontanería, limpieza para sus
               hogares y mucho más. Consigue más trabajo y haz crecer tu negocio.
             </p>
-            <Button 
-              variant="primary" 
+            <Button
+              variant="primary"
               size="medium"
               onClick={handlePostulateClick}
               className="cta-button"

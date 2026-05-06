@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, DECIMAL, TIMESTAMP, ForeignKey, Index
-from sqlalchemy.sql import func
+from sqlalchemy import DECIMAL, TIMESTAMP, Column, ForeignKey, Index, Integer, String
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+
 from .base import Base
 
 # ────────────────────────────────────────────────
@@ -9,11 +10,22 @@ from .base import Base
 # Descripción: Registra el historial completo de suscripciones de cada proveedor, incluyendo inicio, fin, estado y pagos asociados a Stripe.
 # ────────────────────────────────────────────────
 
+
 class Historial_Suscripcion(Base):
     __tablename__ = "historial_suscripcion"
-    id_historial_suscripcion = Column(Integer, primary_key=True, autoincrement=True, index=True)
-    id_proveedor = Column(Integer, ForeignKey("proveedor_servicio.id_proveedor", ondelete="CASCADE"), nullable=False)
-    id_plan = Column(Integer, ForeignKey("plan_suscripcion.id_plan", ondelete="CASCADE"), nullable=False)
+    id_historial_suscripcion = Column(
+        Integer, primary_key=True, autoincrement=True, index=True
+    )
+    id_proveedor = Column(
+        Integer,
+        ForeignKey("proveedor_servicio.id_proveedor", ondelete="CASCADE"),
+        nullable=False,
+    )
+    id_plan = Column(
+        Integer,
+        ForeignKey("plan_suscripcion.id_plan", ondelete="CASCADE"),
+        nullable=False,
+    )
     fecha_inicio = Column(TIMESTAMP, nullable=False, server_default=func.now())
     fecha_fin = Column(TIMESTAMP, nullable=True)
     estado = Column(String(20), nullable=False, default="activa")
@@ -21,8 +33,12 @@ class Historial_Suscripcion(Base):
     monto_pagado = Column(DECIMAL(10, 2), nullable=False)
 
     # Relaciones
-    proveedor_servicio = relationship("Proveedor_Servicio", back_populates="historial_suscripcion")
-    plan_suscripcion = relationship("Plan_Suscripcion", back_populates="historial_suscripcion")
+    proveedor_servicio = relationship(
+        "Proveedor_Servicio", back_populates="historial_suscripcion"
+    )
+    plan_suscripcion = relationship(
+        "Plan_Suscripcion", back_populates="historial_suscripcion"
+    )
 
     __table_args__ = (
         Index("idx_historial_proveedor", "id_proveedor"),

@@ -1,8 +1,18 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey, DECIMAL, TIMESTAMP, Table, Index
-from sqlalchemy.orm import relationship
 from datetime import datetime
-from .base import Base
 
+from sqlalchemy import (
+    DECIMAL,
+    TIMESTAMP,
+    Column,
+    ForeignKey,
+    Integer,
+    String,
+    Table,
+    Text,
+)
+from sqlalchemy.orm import relationship
+
+from .base import Base
 
 # ────────────────────────────────────────────────
 # Tabla intermedia: Publicacion_Etiqueta
@@ -12,8 +22,14 @@ from .base import Base
 Publicacion_Etiqueta = Table(
     "publicacion_etiqueta",
     Base.metadata,
-    Column("id_publicacion", Integer, ForeignKey("publicacion_servicio.id_publicacion", ondelete="CASCADE")),
-    Column("id_etiqueta", Integer, ForeignKey("etiqueta.id_etiqueta", ondelete="CASCADE"))
+    Column(
+        "id_publicacion",
+        Integer,
+        ForeignKey("publicacion_servicio.id_publicacion", ondelete="CASCADE"),
+    ),
+    Column(
+        "id_etiqueta", Integer, ForeignKey("etiqueta.id_etiqueta", ondelete="CASCADE")
+    ),
 )
 
 
@@ -25,6 +41,7 @@ Publicacion_Etiqueta = Table(
 # de servicios y se muestra en la interfaz principal.
 # ────────────────────────────────────────────────
 
+
 class Categoria_Servicio(Base):
     __tablename__ = "categoria_servicio"
 
@@ -35,7 +52,11 @@ class Categoria_Servicio(Base):
     orden_visualizacion = Column(Integer, nullable=False, default=1)
 
     # Relaciones
-    publicacion_servicio = relationship("Publicacion_Servicio", back_populates="categoria_servicio", cascade="all, delete")
+    publicacion_servicio = relationship(
+        "Publicacion_Servicio",
+        back_populates="categoria_servicio",
+        cascade="all, delete",
+    )
 
 
 # ────────────────────────────────────────────────
@@ -47,34 +68,60 @@ class Categoria_Servicio(Base):
 # con servicios contratados.
 # ────────────────────────────────────────────────
 
+
 class Publicacion_Servicio(Base):
     __tablename__ = "publicacion_servicio"
 
     id_publicacion = Column(Integer, primary_key=True, autoincrement=True, index=True)
-    id_proveedor = Column(Integer, ForeignKey("proveedor_servicio.id_proveedor", ondelete="CASCADE"), nullable=False, index=True)
-    id_categoria = Column(Integer, ForeignKey("categoria_servicio.id_categoria", ondelete="CASCADE"), nullable=False, index=True)
+    id_proveedor = Column(
+        Integer,
+        ForeignKey("proveedor_servicio.id_proveedor", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
+    id_categoria = Column(
+        Integer,
+        ForeignKey("categoria_servicio.id_categoria", ondelete="CASCADE"),
+        nullable=False,
+        index=True,
+    )
 
     titulo = Column(String(200), nullable=False)
     descripcion = Column(Text, nullable=False)
     rango_precio_min = Column(DECIMAL(10, 2), nullable=False)
     rango_precio_max = Column(DECIMAL(10, 2), nullable=False)
-    fecha_publicacion = Column(TIMESTAMP, nullable=False, default=datetime.utcnow, index=True)
+    fecha_publicacion = Column(
+        TIMESTAMP, nullable=False, default=datetime.utcnow, index=True
+    )
     fecha_actualizacion = Column(TIMESTAMP, nullable=True)
     estado = Column(String(20), nullable=False, default="activo", index=True)
     vistas = Column(Integer, nullable=False, default=0)
 
     # Relaciones
-    proveedor_servicio = relationship("Proveedor_Servicio", back_populates="publicacion_servicio")
-    categoria_servicio = relationship("Categoria_Servicio", back_populates="publicacion_servicio")
-    imagen_publicacion = relationship("Imagen_Publicacion", back_populates="publicacion_servicio", cascade="all, delete")
-    servicio_contratado = relationship("Servicio_Contratado", back_populates="publicacion_servicio", cascade="all, delete")
+    proveedor_servicio = relationship(
+        "Proveedor_Servicio", back_populates="publicacion_servicio"
+    )
+    categoria_servicio = relationship(
+        "Categoria_Servicio", back_populates="publicacion_servicio"
+    )
+    imagen_publicacion = relationship(
+        "Imagen_Publicacion",
+        back_populates="publicacion_servicio",
+        cascade="all, delete",
+    )
+    servicio_contratado = relationship(
+        "Servicio_Contratado",
+        back_populates="publicacion_servicio",
+        cascade="all, delete",
+    )
 
     # Relación N:M con Etiqueta (a través de Publicacion_Etiqueta)
     etiqueta = relationship(
         "Etiqueta",
         secondary=Publicacion_Etiqueta,
-        back_populates="publicacion_servicio"
+        back_populates="publicacion_servicio",
     )
+
 
 # ────────────────────────────────────────────────
 # Entidad: Imagen_Publicacion
@@ -83,14 +130,21 @@ class Publicacion_Servicio(Base):
 # (máximo de 10 por publicación). Se guardan en Amazon S3.
 # ────────────────────────────────────────────────
 
+
 class Imagen_Publicacion(Base):
     __tablename__ = "imagen_publicacion"
 
     id_imagen = Column(Integer, primary_key=True, autoincrement=True, index=True)
-    id_publicacion = Column(Integer, ForeignKey("publicacion_servicio.id_publicacion", ondelete="CASCADE"), nullable=False)
+    id_publicacion = Column(
+        Integer,
+        ForeignKey("publicacion_servicio.id_publicacion", ondelete="CASCADE"),
+        nullable=False,
+    )
     url_imagen = Column(String(500), nullable=False)
     orden = Column(Integer, nullable=False, default=1)
     fecha_subida = Column(TIMESTAMP, nullable=False, default=datetime.utcnow)
 
     # Relaciones
-    publicacion_servicio = relationship("Publicacion_Servicio", back_populates="imagen_publicacion")
+    publicacion_servicio = relationship(
+        "Publicacion_Servicio", back_populates="imagen_publicacion"
+    )

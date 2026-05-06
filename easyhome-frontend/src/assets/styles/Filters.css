@@ -92,7 +92,7 @@
 .filtro-contador {
     font-size: 0.9em;
     color: #777777;
-    margin-left: auto; 
+    margin-left: auto;
 }
 
 /* --- BOTÓN APLICAR --- */
@@ -108,15 +108,14 @@
     font-size: 1em;
     font-family: 'Nunito Sans', sans-serif;
     font-weight: 700; /* Seminegrita */
-    
+
     /* Alinear a la derecha si es necesario, o al centro del contenedor de la tarjeta */
-    align-self: flex-end; 
-    
+    align-self: flex-end;
+
     /* Pequeño ajuste visual para separarlo del contenido superior */
-    margin-top: 15px; 
+    margin-top: 15px;
 }
 
 .filtro-boton-aplicar:hover {
     background-color: #e0e0e0;
 }
-

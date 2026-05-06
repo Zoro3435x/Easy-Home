@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, Text, DECIMAL, TIMESTAMP
-from sqlalchemy.sql import func
+from sqlalchemy import DECIMAL, TIMESTAMP, Column, Integer, String, Text
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+
 from .base import Base
 
 # ────────────────────────────────────────────────
@@ -8,6 +9,7 @@ from .base import Base
 # Referencia: SRS 3.4.2.11 (RF-21 al RF-23)
 # Descripción: Catálogo de planes de suscripción disponibles para proveedores de servicios. Contiene información del nombre, precio, beneficios y estado del plan.
 # ────────────────────────────────────────────────
+
 
 class Plan_Suscripcion(Base):
     __tablename__ = "plan_suscripcion"
@@ -21,5 +23,11 @@ class Plan_Suscripcion(Base):
     fecha_actualizacion = Column(TIMESTAMP, nullable=True)
 
     # Relaciones
-    proveedor_servicio = relationship("Proveedor_Servicio", back_populates="plan_suscripcion", cascade="all, delete")
-    historial_suscripcion = relationship("Historial_Suscripcion", back_populates="plan_suscripcion", cascade="all, delete")
+    proveedor_servicio = relationship(
+        "Proveedor_Servicio", back_populates="plan_suscripcion", cascade="all, delete"
+    )
+    historial_suscripcion = relationship(
+        "Historial_Suscripcion",
+        back_populates="plan_suscripcion",
+        cascade="all, delete",
+    )

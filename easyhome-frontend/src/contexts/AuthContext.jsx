@@ -1,3 +1,5 @@
+// El contexto exporta tanto el hook useAuth como el componente AuthProvider — patrón estándar en React.
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
@@ -5,6 +7,34 @@ const STORAGE_KEY = 'easyhome_auth_user';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 const AuthContext = createContext(null);
+
+const normalizeStoredUser = (rawUser) => {
+  if (!rawUser || typeof rawUser !== 'object') return null;
+
+  const profile = rawUser.profile || {
+    email: rawUser.email,
+    name: rawUser.name,
+    sub: rawUser.sub,
+    phone_number: rawUser.phone_number,
+    'cognito:groups': rawUser.groups || [],
+  };
+
+  if (!profile?.email) return null;
+
+  const groups = rawUser.groups || profile['cognito:groups'] || ['Clientes'];
+  const normalizedProfile = {
+    ...profile,
+    sub: profile.sub || `local-${profile.email}`,
+    name: profile.name || profile.email.split('@')[0],
+    phone_number: profile.phone_number || '',
+    'cognito:groups': groups,
+  };
+
+  return {
+    profile: normalizedProfile,
+    groups,
+  };
+};
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -28,7 +58,14 @@ export const AuthProvider = ({ children }) => {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
-        setUser(parsed);
+        const normalized = normalizeStoredUser(parsed);
+        if (normalized) {
+          setUser(normalized);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+        } else {
+          localStorage.removeItem(STORAGE_KEY);
+          setUser(null);
+        }
       }
       setError(null);
       setLoading(false);
@@ -36,6 +73,32 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setError(err);
       setLoading(false);
+    }
+  };
+
+  // Crea o actualiza el usuario en la BD del backend.
+  // Es no-fatal: si el backend no está disponible la sesión frontend sigue funcionando,
+  // pero las rutas que requieren el header X-User-Email fallarán hasta que el backend responda.
+  const syncUserWithBackend = async (profile, groups) => {
+    try {
+      const response = await fetch(`${API_URL}/api/v1/auth/sync-cognito-user`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: profile.email,
+          cognito_sub: profile.sub || `local-${profile.email}`,
+          name: profile.name || profile.email.split('@')[0],
+          phone: profile.phone_number || null,
+          cognito_groups: groups,
+        }),
+      });
+
+      if (!response.ok) {
+        const detail = await response.text();
+        console.warn(`Sync usuario backend falló (${response.status}): ${detail}`);
+      }
+    } catch (err) {
+      console.warn('No se pudo sincronizar el usuario con el backend:', err);
     }
   };
 
@@ -77,7 +140,7 @@ export const AuthProvider = ({ children }) => {
     groups: groups || profile['cognito:groups'] || [],
   });
 
-  const login = async (email, password) => {
+  const login = async (email, _password) => {
     try {
       const profile = {
         email,
@@ -93,6 +156,8 @@ export const AuthProvider = ({ children }) => {
       setUser(userObj);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(userObj));
       setError(null);
+      // Crear/actualizar el usuario en la BD para que X-User-Email sea válido
+      await syncUserWithBackend(profileWithRole, groups);
       return userObj;
     } catch (err) {
       console.error('Error en login:', err);
@@ -117,6 +182,8 @@ export const AuthProvider = ({ children }) => {
       setUser(userObj);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(userObj));
       setError(null);
+      // Crear/actualizar el usuario en la BD para que X-User-Email sea válido
+      await syncUserWithBackend(profileWithRole, groups);
       return userObj;
     } catch (err) {
       console.error('Error en login con Google:', err);

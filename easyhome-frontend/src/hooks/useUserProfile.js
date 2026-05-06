@@ -12,6 +12,21 @@ export const useUserProfile = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const ensureUserInBackend = async () => {
+      if (!auth.user?.profile?.email) return;
+
+      const profile = auth.user.profile;
+      const groups = auth.user.groups || profile['cognito:groups'] || ['Clientes'];
+
+      await api.post('/api/v1/auth/sync-cognito-user', {
+        email: profile.email,
+        cognito_sub: profile.sub || `local-${profile.email}`,
+        name: profile.name || profile.email.split('@')[0],
+        phone: profile.phone_number || null,
+        cognito_groups: groups,
+      });
+    };
+
     const fetchUserData = async () => {
       if (!auth.isAuthenticated || !auth.user?.profile?.email) {
         setLoading(false);
@@ -30,6 +45,22 @@ export const useUserProfile = () => {
         setUserData(response.data);
         setError(null);
       } catch (err) {
+        if (err.response?.status === 404) {
+          try {
+            await ensureUserInBackend();
+            const email = auth.user.profile.email;
+            const encodedEmail = encodeURIComponent(email);
+            const retryResponse = await api.get(`/api/v1/auth/user-info/${encodedEmail}`);
+            setUserData(retryResponse.data);
+            setError(null);
+            return;
+          } catch (retryErr) {
+            console.error('Error al sincronizar/reintentar perfil:', retryErr);
+            setError(retryErr.response?.data?.detail || 'Error al cargar el perfil');
+            return;
+          }
+        }
+
         console.error('Error al obtener datos del usuario:', err);
         console.error('Respuesta del error:', err.response);
         setError(err.response?.data?.detail || 'Error al cargar el perfil');
@@ -46,16 +77,16 @@ export const useUserProfile = () => {
    */
   const calculateAge = (birthDate) => {
     if (!birthDate) return null;
-    
+
     const today = new Date();
     const birth = new Date(birthDate);
     let age = today.getFullYear() - birth.getFullYear();
     const monthDiff = today.getMonth() - birth.getMonth();
-    
+
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
       age--;
     }
-    
+
     return age;
   };
 
@@ -64,9 +95,9 @@ export const useUserProfile = () => {
    */
   const splitName = (fullName) => {
     if (!fullName) return { nombres: '', apellidos: '' };
-    
+
     const parts = fullName.trim().split(' ');
-    
+
     // Asumimos que los primeros 2 son nombres y el resto apellidos
     // Puedes ajustar esta lógica según necesites
     if (parts.length <= 2) {
@@ -75,10 +106,10 @@ export const useUserProfile = () => {
         apellidos: parts[1] || ''
       };
     }
-    
+
     const nombres = parts.slice(0, 2).join(' ');
     const apellidos = parts.slice(2).join(' ');
-    
+
     return { nombres, apellidos };
   };
 
@@ -93,9 +124,9 @@ export const useUserProfile = () => {
       return { success: true };
     } catch (err) {
       console.error('Error al actualizar usuario:', err);
-      return { 
-        success: false, 
-        error: err.response?.data?.detail || 'Error al actualizar el perfil' 
+      return {
+        success: false,
+        error: err.response?.data?.detail || 'Error al actualizar el perfil'
       };
     }
   };
@@ -128,10 +159,10 @@ export const useUserProfile = () => {
         foto_perfil_url: response.data.foto_perfil_url
       }));
 
-      return { 
-        success: true, 
+      return {
+        success: true,
         url: response.data.foto_perfil_url,
-        message: response.data.message 
+        message: response.data.message
       };
     } catch (err) {
       console.error('Error al subir foto de perfil:', err);

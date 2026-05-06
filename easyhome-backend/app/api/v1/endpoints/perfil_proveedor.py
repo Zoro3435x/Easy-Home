@@ -1,33 +1,31 @@
 # app/api/v1/endpoints/perfil_proveedor.py
 
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session, joinedload, aliased
-from sqlalchemy import func, cast, DECIMAL
 from datetime import datetime, timezone
 from typing import List
 
-# --- Imports de Esquemas ---
-from app.schemas.proveedor import (
-    ProveedorPerfilAboutSchema, 
-    PublicacionServicioSchema, 
-    ImagenPublicacionSchema,
-    ReseñaPublicaSchema
-)
-
-# --- Imports de Modelos ---
-from app.models.user import Proveedor_Servicio, Usuario
-from app.models.property import Publicacion_Servicio, Imagen_Publicacion
-from app.models.servicio_contratado import Servicio_Contratado
-from app.models.reseña_servicio import Reseña_Servicio
-from app.models.imagen_reseña import Imagen_Reseña
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy import DECIMAL, cast, func
+from sqlalchemy.orm import Session, aliased, joinedload
 
 # --- Import de DB ---
-from app.core.database import get_db 
+from app.core.database import get_db
+from app.models.property import Imagen_Publicacion, Publicacion_Servicio
+from app.models.reseña_servicio import Reseña_Servicio
+from app.models.servicio_contratado import Servicio_Contratado
 
-router = APIRouter(
-    prefix="/proveedores",
-    tags=["Perfil Proveedor"]
+# --- Imports de Modelos ---
+from app.models.user import Proveedor_Servicio
+
+# --- Imports de Esquemas ---
+from app.schemas.proveedor import (
+    ImagenPublicacionSchema,
+    ProveedorPerfilAboutSchema,
+    PublicacionServicioSchema,
+    ReseñaPublicaSchema,
 )
+
+router = APIRouter(prefix="/proveedores", tags=["Perfil Proveedor"])
+
 
 # -----------------------------------------------------------------
 # --- Endpoint 1: Pestaña "Acerca de" ---
@@ -38,22 +36,27 @@ def get_perfil_about(id_proveedor: int, db: Session = Depends(get_db)):
     Obtiene la información principal del perfil de un proveedor
     para la pestaña "Acerca de".
     """
-    
-    proveedor = db.query(Proveedor_Servicio)\
-                  .options(joinedload(Proveedor_Servicio.usuario))\
-                  .filter(Proveedor_Servicio.id_proveedor == id_proveedor)\
-                  .first()
+
+    proveedor = (
+        db.query(Proveedor_Servicio)
+        .options(joinedload(Proveedor_Servicio.usuario))
+        .filter(Proveedor_Servicio.id_proveedor == id_proveedor)
+        .first()
+    )
 
     if not proveedor:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Proveedor con id {id_proveedor} no encontrado"
+            detail=f"Proveedor con id {id_proveedor} no encontrado",
         )
 
-    total_reseñas = db.query(func.count(Reseña_Servicio.id_reseña))\
-                       .filter(Reseña_Servicio.id_proveedor == id_proveedor)\
-                       .scalar() or 0
-    
+    total_reseñas = (
+        db.query(func.count(Reseña_Servicio.id_reseña))
+        .filter(Reseña_Servicio.id_proveedor == id_proveedor)
+        .scalar()
+        or 0
+    )
+
     años_activo = 0
     if proveedor.tiempo_activo_desde:
         delta = datetime.now(timezone.utc) - proveedor.tiempo_activo_desde
@@ -64,13 +67,11 @@ def get_perfil_about(id_proveedor: int, db: Session = Depends(get_db)):
 
     return proveedor
 
+
 # -----------------------------------------------------------------
 # --- Endpoint 2: Pestaña "Mis servicios" ---
 # -----------------------------------------------------------------
-@router.get(
-    "/{id_proveedor}/servicios", 
-    response_model=List[PublicacionServicioSchema]
-)
+@router.get("/{id_proveedor}/servicios", response_model=List[PublicacionServicioSchema])
 def get_perfil_servicios(id_proveedor: int, db: Session = Depends(get_db)):
     """
     Obtiene la lista de servicios publicados por un proveedor,
@@ -78,18 +79,23 @@ def get_perfil_servicios(id_proveedor: int, db: Session = Depends(get_db)):
     para CADA publicación.
     """
 
-    subquery_agregados = db.query(
-        Servicio_Contratado.id_publicacion,
-        cast(
-            func.avg(Reseña_Servicio.calificacion_general), 
-            DECIMAL(3, 2)
-        ).label("calificacion_promedio_publicacion"),
-        func.count(Reseña_Servicio.id_reseña).label("total_reseñas_publicacion")
-    )\
-    .join(Reseña_Servicio, Reseña_Servicio.id_servicio_contratado == Servicio_Contratado.id_servicio_contratado)\
-    .filter(Servicio_Contratado.id_publicacion.isnot(None))\
-    .group_by(Servicio_Contratado.id_publicacion)\
-    .subquery()
+    subquery_agregados = (
+        db.query(
+            Servicio_Contratado.id_publicacion,
+            cast(func.avg(Reseña_Servicio.calificacion_general), DECIMAL(3, 2)).label(
+                "calificacion_promedio_publicacion"
+            ),
+            func.count(Reseña_Servicio.id_reseña).label("total_reseñas_publicacion"),
+        )
+        .join(
+            Reseña_Servicio,
+            Reseña_Servicio.id_servicio_contratado
+            == Servicio_Contratado.id_servicio_contratado,
+        )
+        .filter(Servicio_Contratado.id_publicacion.isnot(None))
+        .group_by(Servicio_Contratado.id_publicacion)
+        .subquery()
+    )
 
     agregados = aliased(subquery_agregados, name="agregados")
 
@@ -97,9 +103,11 @@ def get_perfil_servicios(id_proveedor: int, db: Session = Depends(get_db)):
         db.query(
             Publicacion_Servicio,
             agregados.c.calificacion_promedio_publicacion,
-            agregados.c.total_reseñas_publicacion
+            agregados.c.total_reseñas_publicacion,
         )
-        .outerjoin(agregados, Publicacion_Servicio.id_publicacion == agregados.c.id_publicacion)
+        .outerjoin(
+            agregados, Publicacion_Servicio.id_publicacion == agregados.c.id_publicacion
+        )
         .options(joinedload(Publicacion_Servicio.imagen_publicacion))
         .filter(Publicacion_Servicio.id_proveedor == id_proveedor)
         .filter(Publicacion_Servicio.estado == "activo")
@@ -109,45 +117,43 @@ def get_perfil_servicios(id_proveedor: int, db: Session = Depends(get_db)):
 
     lista_publicaciones = []
     for publicacion, avg_rating, count_reviews in query_results:
-        
         publicacion.calificacion_promedio_publicacion = avg_rating
         publicacion.total_reseñas_publicacion = count_reviews or 0
-        
+
         lista_publicaciones.append(publicacion)
 
     return lista_publicaciones
 
+
 # -----------------------------------------------------------------
 # --- Endpoint 3: Pestaña "Portafolio" ---
 # -----------------------------------------------------------------
-@router.get(
-    "/{id_proveedor}/portafolio",
-    response_model=List[ImagenPublicacionSchema]
-)
+@router.get("/{id_proveedor}/portafolio", response_model=List[ImagenPublicacionSchema])
 def get_perfil_portafolio(id_proveedor: int, db: Session = Depends(get_db)):
     """
     Obtiene una galería de todas las imágenes de todas las
     publicaciones activas de un proveedor.
     """
-    
+
     fotos = (
         db.query(Imagen_Publicacion)
-        .join(Publicacion_Servicio, Publicacion_Servicio.id_publicacion == Imagen_Publicacion.id_publicacion)
+        .join(
+            Publicacion_Servicio,
+            Publicacion_Servicio.id_publicacion == Imagen_Publicacion.id_publicacion,
+        )
         .filter(Publicacion_Servicio.id_proveedor == id_proveedor)
         .filter(Publicacion_Servicio.estado == "activo")
         .order_by(Imagen_Publicacion.fecha_subida.desc())
         .all()
     )
-    
+
     return fotos
+
 
 # -----------------------------------------------------------------
 # --- Endpoint 4: Pestaña "Reseñas" ---
 # -----------------------------------------------------------------
-@router.get(
-    "/{id_proveedor}/reseñas",
-    response_model=List[ReseñaPublicaSchema]
-)
+@router.get("/{id_proveedor}/reseñas", response_model=List[ReseñaPublicaSchema])
 def get_perfil_reseñas(id_proveedor: int, db: Session = Depends(get_db)):
     """
     Obtiene la lista de todas las reseñas que ha recibido
@@ -159,7 +165,7 @@ def get_perfil_reseñas(id_proveedor: int, db: Session = Depends(get_db)):
         .options(
             joinedload(Reseña_Servicio.usuario),
             joinedload(Reseña_Servicio.servicio_contratado),
-            joinedload(Reseña_Servicio.imagen_reseña)
+            joinedload(Reseña_Servicio.imagen_reseña),
         )
         .filter(Reseña_Servicio.id_proveedor == id_proveedor)
         .filter(Reseña_Servicio.estado == "activa")
@@ -167,6 +173,7 @@ def get_perfil_reseñas(id_proveedor: int, db: Session = Depends(get_db)):
         .all()
     )
     return reseñas
+
 
 # -----------------------------------------------------------------
 # --- Endpoint 5 y 6: COMENTADOS - Requieren ServicioHistorialSchema ---
@@ -180,13 +187,13 @@ def get_perfil_reseñas(id_proveedor: int, db: Session = Depends(get_db)):
 # )
 # def get_perfil_historial_servicios_activos(id_proveedor: int, db: Session = Depends(get_db)):
 #     """
-#     Obtiene el panel de trabajos ACTIVOS de un proveedor 
+#     Obtiene el panel de trabajos ACTIVOS de un proveedor
 #     (confirmados o en proceso) para su panel de gestión.
 #     """
-#     
+#
 #     # Estados que representan un trabajo "activo" (pendiente de finalizar)
 #     ESTADOS_ACTIVOS = ['confirmado', 'en_proceso']
-#     
+#
 #     servicios = (
 #         db.query(Servicio_Contratado)
 #         .options(
@@ -197,7 +204,7 @@ def get_perfil_reseñas(id_proveedor: int, db: Session = Depends(get_db)):
 #         .order_by(Servicio_Contratado.fecha_contacto.desc())
 #         .all()
 #     )
-#     
+#
 #     return servicios
 
 # @router.patch(
@@ -205,7 +212,7 @@ def get_perfil_reseñas(id_proveedor: int, db: Session = Depends(get_db)):
 #     response_model=ServicioHistorialSchema
 # )
 # def finalizar_servicio(
-#     id_servicio_contratado: int, 
+#     id_servicio_contratado: int,
 #     db: Session = Depends(get_db)
 #     # current_user: Usuario = Depends(get_current_user) # <-- Añadir seguridad después
 # ):
@@ -213,37 +220,37 @@ def get_perfil_reseñas(id_proveedor: int, db: Session = Depends(get_db)):
 #     Permite a un proveedor marcar un servicio como 'finalizado'.
 #     (Cumple RF-19)
 #     """
-#     
+#
 #     # 1. Buscar el servicio
 #     servicio = db.query(Servicio_Contratado)\
 #                  .options(joinedload(Servicio_Contratado.usuario))\
 #                  .filter(Servicio_Contratado.id_servicio_contratado == id_servicio_contratado)\
 #                  .first()
-# 
+#
 #     if not servicio:
 #         raise HTTPException(
 #             status_code=status.HTTP_404_NOT_FOUND,
 #             detail="Servicio contratado no encontrado"
 #         )
-#     
+#
 #     # 2. (Aquí iría la lógica de seguridad)
 #     # if servicio.id_proveedor != current_user.id_usuario:
 #     #    raise HTTPException(status_code=403, detail="No autorizado")
-# 
+#
 #     # 3. Validar estado (Solo se puede finalizar algo 'confirmado' o 'en_proceso')
 #     if servicio.estado_servicio not in ['confirmado', 'en_proceso']:
 #         raise HTTPException(
 #             status_code=status.HTTP_400_BAD_REQUEST,
 #             detail=f"No se puede finalizar un servicio que está '{servicio.estado_servicio}'"
 #         )
-#         
+#
 #     # 4. Actualizar el estado
 #     servicio.estado_servicio = "finalizado"
 #     servicio.fecha_finalizacion = datetime.now(timezone.utc)
-#     
+#
 #     db.commit()
 #     db.refresh(servicio)
-#     
+#
 #     # 5. (Aquí iría la lógica para enviar la alerta al cliente, RF-20)
-#     
+#
 #     return servicio

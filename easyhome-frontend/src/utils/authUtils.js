@@ -9,7 +9,7 @@
  */
 export const getUserGroups = (user) => {
   if (!user || !user.profile) return [];
-  
+
   // Los grupos vienen en el token en el claim 'cognito:groups'
   return user.profile['cognito:groups'] || [];
 };
@@ -59,12 +59,12 @@ export const isClient = (user) => {
  */
 export const getUserRole = (user) => {
   const groups = getUserGroups(user);
-  
+
   // Prioridad de roles
   if (groups.includes('Admin')) return 'Admin';
   if (groups.includes('Trabajadores')) return 'Trabajadores';
   if (groups.includes('Clientes')) return 'Clientes';
-  
+
   return null;
 };
 

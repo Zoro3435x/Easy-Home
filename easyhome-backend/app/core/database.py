@@ -1,10 +1,12 @@
 """
 Database configuration and session management
 """
+from typing import AsyncGenerator, Generator
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
-from typing import Generator, AsyncGenerator
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+from sqlalchemy.orm import Session, sessionmaker
+
 from app.core.config import settings
 
 # Synchronous database engine
@@ -17,11 +19,7 @@ engine = create_engine(
 )
 
 # Synchronous session factory
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine
-)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Asynchronous database engine (for async operations)
 async_engine = create_async_engine(
@@ -45,7 +43,7 @@ AsyncSessionLocal = async_sessionmaker(
 def get_db() -> Generator[Session, None, None]:
     """
     Dependency function to get database session for synchronous operations
-    
+
     Usage:
         @app.get("/items/")
         def read_items(db: Session = Depends(get_db)):
@@ -61,7 +59,7 @@ def get_db() -> Generator[Session, None, None]:
 async def get_async_db() -> AsyncGenerator[AsyncSession, None]:
     """
     Dependency function to get database session for asynchronous operations
-    
+
     Usage:
         @app.get("/items/")
         async def read_items(db: AsyncSession = Depends(get_async_db)):
@@ -80,31 +78,9 @@ def init_db():
     Initialize database tables
     Call this function to create all tables defined in models
     """
-    from app.models.base import Base
     # Import all models here to ensure they are registered with Base
-    from app.models import (
-        Usuario,
-        Proveedor_Servicio,
-        Categoria_Servicio,
-        Publicacion_Servicio,
-        Imagen_Publicacion,
-        Publicacion_Etiqueta,
-        Etiqueta,
-        Foto_Trabajo_Anterior,
-        Servicio_Contratado,
-        Alerta_Sistema,
-        Reseña_Servicio,
-        Imagen_Reseña,
-        Plan_Suscripcion,
-        Historial_Suscripcion,
-        Paquete_Publicidad,
-        Solicitud_Paquete_Publicitario,
-        Publicidad_Activa,
-        Reporte_Usuario,
-        Token_Recuperacion_Password,
-        Reporte_Mensual_Premium,
-    )
-    
+    from app.models.base import Base
+
     Base.metadata.create_all(bind=engine)
     print("✅ Database tables created successfully!")
 
@@ -113,32 +89,10 @@ async def init_async_db():
     """
     Initialize database tables asynchronously
     """
-    from app.models.base import Base
     # Import all models
-    from app.models import (
-        Usuario,
-        Proveedor_Servicio,
-        Categoria_Servicio,
-        Publicacion_Servicio,
-        Imagen_Publicacion,
-        Publicacion_Etiqueta,
-        Etiqueta,
-        Foto_Trabajo_Anterior,
-        Servicio_Contratado,
-        Alerta_Sistema,
-        Reseña_Servicio,
-        Imagen_Reseña,
-        Plan_Suscripcion,
-        Historial_Suscripcion,
-        Paquete_Publicidad,
-        Solicitud_Paquete_Publicitario,
-        Publicidad_Activa,
-        Reporte_Usuario,
-        Token_Recuperacion_Password,
-        Reporte_Mensual_Premium,
-    )
-    
+    from app.models.base import Base
+
     async with async_engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    
+
     print("✅ Database tables created successfully (async)!")

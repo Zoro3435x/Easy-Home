@@ -3,29 +3,23 @@ Script para crear un usuario administrador en la base de datos
 Ejecutar con: python scripts/create_admin_user.py
 """
 import sys
-from pathlib import Path
 from datetime import datetime
-
-# Añadir el directorio raíz al path
-ROOT_DIR = Path(__file__).resolve().parent.parent
-sys.path.append(str(ROOT_DIR))
 
 from app.core.database import SessionLocal
 from app.models.user import Usuario
-from app.core.config import settings
 
 
 def create_admin_user(email: str, nombre: str, contraseña: str = ""):
     """Crear un usuario administrador"""
     db = SessionLocal()
-    
+
     try:
         # Verificar si el usuario ya existe
         existing = db.query(Usuario).filter(Usuario.correo_electronico == email).first()
         if existing:
             print(f"❌ El usuario {email} ya existe")
             return False
-        
+
         # Crear el nuevo admin
         admin_user = Usuario(
             nombre=nombre,
@@ -35,13 +29,13 @@ def create_admin_user(email: str, nombre: str, contraseña: str = ""):
             estado_cuenta="activo",
             metodo_autenticacion="local",
             fecha_registro=datetime.now(),
-            ultima_sesion=datetime.now()
+            ultima_sesion=datetime.now(),
         )
-        
+
         db.add(admin_user)
         db.commit()
         db.refresh(admin_user)
-        
+
         print("\n" + "=" * 70)
         print("✅ USUARIO ADMINISTRADOR CREADO EXITOSAMENTE")
         print("=" * 70)
@@ -52,9 +46,9 @@ def create_admin_user(email: str, nombre: str, contraseña: str = ""):
         print(f"Estado: {admin_user.estado_cuenta}")
         print(f"Fecha de registro: {admin_user.fecha_registro}")
         print("=" * 70)
-        
+
         return True
-        
+
     except Exception as e:
         print(f"❌ Error al crear admin: {e}")
         db.rollback()
@@ -67,24 +61,26 @@ def main():
     print("=" * 70)
     print("CREAR USUARIO ADMINISTRADOR")
     print("=" * 70)
-    
+
     email = input("📧 Email del administrador: ").strip()
     nombre = input("👤 Nombre completo: ").strip()
-    
+
     if not email or not nombre:
         print("❌ Email y nombre son obligatorios")
         return
-    
+
     # Validar email básico
     if "@" not in email:
         print("❌ Email inválido")
         return
-    
+
     success = create_admin_user(email, nombre)
-    
+
     if success:
         print("\n💡 Tip: Ahora puedes iniciar sesión con este email en la app")
-        print("   El sistema verificará tu rol en la BD y te llevará al admin dashboard")
+        print(
+            "   El sistema verificará tu rol en la BD y te llevará al admin dashboard"
+        )
     else:
         sys.exit(1)
 

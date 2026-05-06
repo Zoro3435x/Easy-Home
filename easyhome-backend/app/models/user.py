@@ -1,7 +1,17 @@
 # app/models/user.py
-from sqlalchemy import Column, Integer, String, Date, TIMESTAMP, Boolean, ForeignKey, Text, DECIMAL
-from sqlalchemy.sql import func
+from sqlalchemy import (
+    DECIMAL,
+    TIMESTAMP,
+    Column,
+    Date,
+    ForeignKey,
+    Integer,
+    String,
+    Text,
+)
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+
 from .base import Base
 
 
@@ -33,13 +43,29 @@ class Usuario(Base):
     ultima_sesion = Column(TIMESTAMP(timezone=True), nullable=True)
 
     # Relaciones
-    proveedor_servicio = relationship("Proveedor_Servicio", back_populates="usuario", uselist=False)
-    servicio_contratado = relationship("Servicio_Contratado", back_populates="usuario", cascade="all, delete")
-    reseña_servicio = relationship("Reseña_Servicio", back_populates="usuario", cascade="all, delete")
-    alerta_sistema = relationship("Alerta_Sistema", back_populates="usuario", cascade="all, delete")
-    solicitud_paquete_publicitario = relationship("Solicitud_Paquete_Publicitario", back_populates="usuario", cascade="all, delete")
-    reporte_usuario = relationship("Reporte_Usuario", back_populates="reportador", cascade="all, delete")
-    token_recuperacion_password = relationship("Token_Recuperacion_Password", back_populates="usuario", cascade="all, delete")
+    proveedor_servicio = relationship(
+        "Proveedor_Servicio", back_populates="usuario", uselist=False
+    )
+    servicio_contratado = relationship(
+        "Servicio_Contratado", back_populates="usuario", cascade="all, delete"
+    )
+    reseña_servicio = relationship(
+        "Reseña_Servicio", back_populates="usuario", cascade="all, delete"
+    )
+    alerta_sistema = relationship(
+        "Alerta_Sistema", back_populates="usuario", cascade="all, delete"
+    )
+    solicitud_paquete_publicitario = relationship(
+        "Solicitud_Paquete_Publicitario",
+        back_populates="usuario",
+        cascade="all, delete",
+    )
+    reporte_usuario = relationship(
+        "Reporte_Usuario", back_populates="reportador", cascade="all, delete"
+    )
+    token_recuperacion_password = relationship(
+        "Token_Recuperacion_Password", back_populates="usuario", cascade="all, delete"
+    )
 
 
 # ────────────────────────────────────────────────
@@ -64,21 +90,51 @@ class Proveedor_Servicio(Base):
     trayectoria_laboral = Column(Text, nullable=True)
     especializaciones = Column(Text, nullable=True)
     enlace_whatsapp = Column(String(500), nullable=True)
-    estado_solicitud = Column(String(20), nullable=False, default="pendiente", index=True)
+    estado_solicitud = Column(
+        String(20), nullable=False, default="pendiente", index=True
+    )
     fecha_solicitud = Column(TIMESTAMP(timezone=True), server_default=func.now())
     fecha_aprobacion = Column(TIMESTAMP(timezone=True), nullable=True)
     tiempo_activo_desde = Column(TIMESTAMP(timezone=True), nullable=True)
     cantidad_trabajos_realizados = Column(Integer, nullable=False, server_default="0")
     calificacion_promedio = Column(DECIMAL(3, 2), nullable=True, index=True)
-    id_plan_suscripcion = Column(Integer, ForeignKey("plan_suscripcion.id_plan"), nullable=True)
+    id_plan_suscripcion = Column(
+        Integer, ForeignKey("plan_suscripcion.id_plan"), nullable=True
+    )
 
     # Relaciones
     usuario = relationship("Usuario", back_populates="proveedor_servicio")
-    foto_trabajo = relationship("Foto_Trabajo_Anterior", back_populates="proveedor_servicio", cascade="all, delete")
-    publicacion_servicio = relationship("Publicacion_Servicio", back_populates="proveedor_servicio", cascade="all, delete")
-    servicio_contratado = relationship("Servicio_Contratado", back_populates="proveedor_servicio", cascade="all, delete")
-    reseña_servicio = relationship("Reseña_Servicio", back_populates="proveedor_servicio", cascade="all, delete")
-    historial_suscripcion = relationship("Historial_Suscripcion", back_populates="proveedor_servicio", cascade="all, delete")
-    reporte_usuario = relationship("Reporte_Usuario", back_populates="proveedor_reportado", cascade="all, delete")
-    reporte_mensual_premium = relationship("Reporte_Mensual_Premium", back_populates="proveedor_servicio", cascade="all, delete")
-    plan_suscripcion = relationship("Plan_Suscripcion", back_populates="proveedor_servicio")
+    foto_trabajo = relationship(
+        "Foto_Trabajo_Anterior",
+        back_populates="proveedor_servicio",
+        cascade="all, delete",
+    )
+    publicacion_servicio = relationship(
+        "Publicacion_Servicio",
+        back_populates="proveedor_servicio",
+        cascade="all, delete",
+    )
+    servicio_contratado = relationship(
+        "Servicio_Contratado",
+        back_populates="proveedor_servicio",
+        cascade="all, delete",
+    )
+    reseña_servicio = relationship(
+        "Reseña_Servicio", back_populates="proveedor_servicio", cascade="all, delete"
+    )
+    historial_suscripcion = relationship(
+        "Historial_Suscripcion",
+        back_populates="proveedor_servicio",
+        cascade="all, delete",
+    )
+    reporte_usuario = relationship(
+        "Reporte_Usuario", back_populates="proveedor_reportado", cascade="all, delete"
+    )
+    reporte_mensual_premium = relationship(
+        "Reporte_Mensual_Premium",
+        back_populates="proveedor_servicio",
+        cascade="all, delete",
+    )
+    plan_suscripcion = relationship(
+        "Plan_Suscripcion", back_populates="proveedor_servicio"
+    )

@@ -30,9 +30,9 @@ const ServiceCheckboxGroup = ({
           {label} {required && <span className="required">*</span>}
         </label>
       )}
-      
+
       {helpText && <p className="service-group-help">{helpText}</p>}
-      
+
       {loading ? (
         <div className="service-group-loading">
           <p>Cargando servicios...</p>
@@ -45,11 +45,11 @@ const ServiceCheckboxGroup = ({
           </p>
         </div>
       ) : options.length > 0 ? (
-        <div 
+        <div
           className="service-checkboxes-grid"
           style={{
-            gridTemplateColumns: columns === 'auto' 
-              ? 'repeat(auto-fill, minmax(200px, 1fr))' 
+            gridTemplateColumns: columns === 'auto'
+              ? 'repeat(auto-fill, minmax(200px, 1fr))'
               : `repeat(${columns}, 1fr)`
           }}
         >

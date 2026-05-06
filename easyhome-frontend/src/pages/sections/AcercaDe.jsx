@@ -58,7 +58,7 @@ function AcercaDe({ idProveedor }) {
   return (
     <div className="acerca-de-container">
       <h2>Acerca de mí</h2>
-      
+
       {/* Biografía */}
       <section className="bio-section">
         <h3>Descripción Profesional</h3>
@@ -91,7 +91,7 @@ function AcercaDe({ idProveedor }) {
           </div>
           <div className="stat-item">
             <span className="stat-value">
-              {proveedorData.calificacion_promedio ? 
+              {proveedorData.calificacion_promedio ?
                 Number(proveedorData.calificacion_promedio).toFixed(1) : 'N/A'}
             </span>
             <span className="stat-label">Calificación promedio</span>

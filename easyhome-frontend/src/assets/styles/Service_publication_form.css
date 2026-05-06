@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
- 
+
 :root {
     --primary-color: #16394f;
     --border-color: #D3D3D3;
@@ -8,7 +8,7 @@
     --placeholder-color: #9d9d9d;
     --background-light: #f9f9f9;
 }
- 
+
 .form-container {
     max-width: 600px;
     margin: 50px auto;
@@ -16,7 +16,7 @@
     background-color: white;
     font-family: Nunito Sans, sans-serif;
 }
- 
+
 .form-title {
     text-align: center;
     font-size: 25px;
@@ -24,18 +24,18 @@
     margin-bottom: 30px;
     color: var(--text-color);
 }
- 
+
 .form-group {
     margin-bottom: 25px;
-   
+
 }
- 
+
 .required-star {
     color: red;
     margin-left: 3px;
     font-weight: bold;
 }
- 
+
 label[for]:not([for="fotos"]) {
   background: var(--blanco, #ffffff);
   border-radius: 5px 0px 0px 5px;
@@ -51,7 +51,7 @@ label[for]:not([for="fotos"]) {
   font-size: 17px;
   margin-bottom: 18px;
 }
- 
+
 .form-container .form-group input[type="text"],
 .form-container .form-group input[type="number"],
 .form-container .form-group select,
@@ -66,26 +66,26 @@ label[for]:not([for="fotos"]) {
     color: #000000;
     background-color: white;
 }
- 
+
 .form-container .form-group select:valid {
   color: #000000;
 }
- 
+
 .custom-select-wrapper {
     position: relative;
     display: block;
 }
- 
+
 .custom-select-wrapper select {
     /* Ocultar la flecha nativa */
     -webkit-appearance: none;
-    -moz-appearance: none;    
-    appearance: none;        
-   
+    -moz-appearance: none;
+    appearance: none;
+
     padding-right: 30px;
     width: 100%;
 }
- 
+
 .select-icon {
     position: absolute;
     top: 50%;
@@ -93,14 +93,14 @@ label[for]:not([for="fotos"]) {
     transform: translateY(-50%);
     pointer-events: none;
 }
- 
+
 .select-icon svg {
     width: 12px;
     height: 12px;
     display: block;
 }
- 
- 
+
+
 #categoria {
     color: var(--placeholder-color);
     font-family: 'Nunito Sans', sans-serif;
@@ -109,7 +109,7 @@ label[for]:not([for="fotos"]) {
     color: var(--text-color);
     font-family: 'Nunito Sans', sans-serif;
 }
- 
+
 #categoria:valid {
   color: #000000;
 }
@@ -124,7 +124,7 @@ label[for]:not([for="fotos"]) {
 ::-ms-input-placeholder {
     color: var(--placeholder-color);
 }
- 
+
 /* --- Estilos de la seccion para subir fotos --- */
 .file-upload-box {
     border: 2px dashed var(--border-color);
@@ -132,49 +132,49 @@ label[for]:not([for="fotos"]) {
     background-color: var(--background-light);
     cursor: pointer;
     text-align: center;
-   
+
     display: flex;
-    align-items: center;      
+    align-items: center;
     justify-content: center;
- 
+
     min-height: 180px;
-    width: 100%;              
+    width: 100%;
     box-sizing: border-box;
 }
- 
+
 .file-upload-label {
     display: flex;
     flex-direction: column;
-    align-items: center;      
-    justify-content: center;  
-    gap: 10px;                
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     width: 100%;
     height: 100%;
     padding: 20px;
 }
- 
+
 .file-upload-label svg {
     width: 40px;
     height: 40px;
     fill: #a3a3a3;
-    margin: 0 auto;            
+    margin: 0 auto;
     display: block;
     transition: fill 0.3s ease;
 }
- 
+
 .file-upload-box p {
     margin: 5px 0 5px 0;
     font-size: 15px;
     text-align: center;
     color: var(--text-color);
 }
- 
+
 .file-upload-box small {
     display: block;
     color: var(--placeholder-color);
     text-align: center;
 }
- 
+
 .upload-icon {
     display: block;
     width: 100%;
@@ -183,18 +183,18 @@ label[for]:not([for="fotos"]) {
     align-items: center;
     margin-bottom: 10px;
 }
- 
+
 /* Contenedor de previews */
 .photo-previews-container {
     margin-top: 15px;
 }
- 
+
 .photo-previews-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 15px;
 }
- 
+
 /* Card de cada foto */
 .photo-preview-card {
     position: relative;
@@ -204,12 +204,12 @@ label[for]:not([for="fotos"]) {
     background-color: #f9f9f9;
     transition: transform 0.2s, box-shadow 0.2s;
 }
- 
+
 .photo-preview-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
- 
+
 /* Imagen preview */
 .photo-preview-image {
     width: 100%;
@@ -217,7 +217,7 @@ label[for]:not([for="fotos"]) {
     object-fit: cover;
     display: block;
 }
- 
+
 /* Info de la foto */
 .photo-preview-info {
     padding: 8px;
@@ -226,20 +226,20 @@ label[for]:not([for="fotos"]) {
     background-color: #fff;
     border-top: 1px solid #e0e0e0;
 }
- 
+
 .photo-preview-name {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: 500;
 }
- 
+
 .photo-preview-size {
     font-size: 11px;
     color: #666;
     margin-top: 3px;
 }
- 
+
 /* Botón eliminar */
 .photo-preview-delete {
     position: absolute;
@@ -260,16 +260,16 @@ label[for]:not([for="fotos"]) {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: background-color 0.2s, transform 0.2s;
 }
- 
+
 .photo-preview-delete:hover {
     background: rgba(255, 255, 255, 1);
     transform: scale(1.1);
 }
- 
+
 .photo-preview-delete:active {
     transform: scale(0.95);
 }
- 
+
 /* --- Estilos del Rango de Precio --- */
 .price-range {
     display: flex;
@@ -277,13 +277,13 @@ label[for]:not([for="fotos"]) {
     justify-content: space-between;
     gap: 10px;
 }
- 
+
 .price-input {
     flex-grow: 1;
     width: auto;
     text-align: center;
 }
- 
+
 .separator {
     background-color: var(--primary-color);
     height: 4px;
@@ -291,7 +291,7 @@ label[for]:not([for="fotos"]) {
     margin: 30px 0;
     border-radius: 1px;
 }
- 
+
 /* --- Estilo del Botón --- */
 .submit-button {
     background-color: #16394F;
@@ -305,7 +305,7 @@ label[for]:not([for="fotos"]) {
     margin-bottom: 1rem;
     width: 60%;
 }
- 
+
 .submit-button:hover {
     background-color: #2a4966;
 }

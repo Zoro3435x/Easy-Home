@@ -31,7 +31,7 @@ const usePostulacion = () => {
     try {
       // Crear FormData para enviar archivos
       const formData = new FormData();
-      
+
       // Agregar campos requeridos por el backend
       formData.append('curp', postulacionData.curp);
       formData.append('direccion', postulacionData.direccion);
@@ -39,14 +39,14 @@ const usePostulacion = () => {
       formData.append('descripcion_servicios', postulacionData.descripcion_servicios || '');
       formData.append('nombre_completo', postulacionData.nombre_completo);
       formData.append('user_email', postulacionData.user_email);
-      
+
       // Agregar array de servicios (nombres)
       if (postulacionData.servicios_ofrece && postulacionData.servicios_ofrece.length > 0) {
         postulacionData.servicios_ofrece.forEach(servicio => {
           formData.append('servicios_ofrece', servicio);
         });
       }
-      
+
       // Agregar archivos de imagen (múltiples)
       if (postulacionData.fotos && postulacionData.fotos.length > 0) {
         postulacionData.fotos.forEach(foto => {
@@ -62,8 +62,7 @@ const usePostulacion = () => {
       return response;
 
     } catch (err) {
-      const errorMessage = err.response?.data?.detail || err.message || 'Error al crear la postulación';
-      setError(errorMessage);
+      setError(err.message || 'Error al crear la postulación');
       setLoading(false);
       throw err;
     }

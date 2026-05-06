@@ -45,19 +45,19 @@
   height: 70px;
   line-height: 70px;
   margin: 0 auto 20px auto;
-  
+
   /* Círculo */
   border-radius: 50%;
-  
+
   /* Colores */
   background-color: var(--color-primary);
   color: var(--color-white);
-  
+
   /* Tipografía */
   font-family: var(--font-titles);
   font-size: 28px;
   font-weight: 700;
-  
+
   /* Sombra */
   box-shadow: 0 4px 10px rgba(22, 57, 79, 0.2);
 }

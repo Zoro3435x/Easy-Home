@@ -34,11 +34,11 @@ function Categories() {
     <section className="categories-section">
       <div className="categories-container">
         <h2 className="categories-title">Categorías</h2>
-        
+
         <div className="categories-list">
           {categories.map((category, index) => (
-            <div 
-              key={category.id_categoria} 
+            <div
+              key={category.id_categoria}
               className={`category-item ${index % 2 === 0 ? 'category-left-icon' : 'category-right-icon'}`}
             >
               <div className="category-icon-wrapper">
@@ -52,7 +52,7 @@ function Categories() {
                   </div>
                 )}
               </div>
-              
+
               <div className="category-content">
                 <h3 className="category-name">{category.nombre_categoria}</h3>
                 {category.descripcion && (

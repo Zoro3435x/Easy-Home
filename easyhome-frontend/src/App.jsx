@@ -6,17 +6,17 @@ import { useCognitoSync } from './hooks/useCognitoSync'
 
 function App() {
   const auth = useAuth();
-  
+
   // Sincronizar usuario con la base de datos cuando inicie sesión
   useCognitoSync();
 
   if (auth.loading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh' 
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
       }}>
         <h2>Cargando...</h2>
       </div>
@@ -25,12 +25,12 @@ function App() {
 
   if (auth.error) {
     return (
-      <div style={{ 
-        display: 'flex', 
+      <div style={{
+        display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh' 
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
       }}>
         <h2>Error de autenticación</h2>
         <p>{auth.error.message}</p>

@@ -60,11 +60,11 @@ function AdminSolicitudes() {
     if (!confirm('¿Estás seguro de que deseas aprobar esta solicitud? El usuario será movido al grupo de Trabajadores.')) {
       return;
     }
-    
+
     setProcesando(true);
     const result = await aprobarSolicitud(idProveedor);
     setProcesando(false);
-    
+
     if (result.success) {
       alert(result.message);
       cerrarModal();
@@ -77,11 +77,11 @@ function AdminSolicitudes() {
     if (!confirm('⚠️ ¿Estás seguro de que deseas rechazar esta solicitud?\n\nEsto eliminará:\n- La solicitud completa\n- Todas las fotos del proveedor\n\nEl usuario podrá crear una nueva solicitud.')) {
       return;
     }
-    
+
     setProcesando(true);
     const result = await rechazarSolicitud(idProveedor);
     setProcesando(false);
-    
+
     if (result.success) {
       alert(result.message);
       cerrarModal();
@@ -123,25 +123,25 @@ function AdminSolicitudes() {
 
       {/* Filtros */}
       <div className="solicitudes-filters">
-        <button 
+        <button
           className={`filter-btn ${filtro === 'todas' ? 'active' : ''}`}
           onClick={() => setFiltro('todas')}
         >
           Todas ({solicitudes.length})
         </button>
-        <button 
+        <button
           className={`filter-btn ${filtro === 'pendiente' ? 'active' : ''}`}
           onClick={() => setFiltro('pendiente')}
         >
           Pendientes ({solicitudes.filter(s => s.estado_solicitud === 'pendiente').length})
         </button>
-        <button 
+        <button
           className={`filter-btn ${filtro === 'aprobado' ? 'active' : ''}`}
           onClick={() => setFiltro('aprobado')}
         >
           Aprobadas ({solicitudes.filter(s => s.estado_solicitud === 'aprobado').length})
         </button>
-        <button 
+        <button
           className={`filter-btn ${filtro === 'rechazado' ? 'active' : ''}`}
           onClick={() => setFiltro('rechazado')}
         >
@@ -230,7 +230,7 @@ function AdminSolicitudes() {
                 >
                   Ver detalles
                 </button>
-                
+
                 {solicitud.estado_solicitud === 'pendiente' && (
                   <>
                     <button
@@ -265,7 +265,7 @@ function AdminSolicitudes() {
                 ✕
               </button>
             </div>
-            
+
             <div className="modal-body">
               <div className="detail-section">
                 <h3>Información Personal</h3>
@@ -334,7 +334,7 @@ function AdminSolicitudes() {
                 <div className="section-header-with-action">
                   <h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-camera"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" /><path d="M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /></svg> Evidencia Fotográfica</h3>
                   {fotosProveedor.length > 0 && (
-                    <button 
+                    <button
                       className="btn-reload-fotos"
                       onClick={recargarFotos}
                       disabled={cargandoFotos}
@@ -344,7 +344,7 @@ function AdminSolicitudes() {
                     </button>
                   )}
                 </div>
-                
+
                 {cargandoFotos && (
                   <div className="loading-fotos">
                     <div className="spinner-small"></div>
@@ -380,8 +380,8 @@ function AdminSolicitudes() {
                     <div className="fotos-grid">
                       {fotosProveedor.map((foto, index) => (
                         <div key={foto.id_foto} className="foto-item">
-                          <img 
-                            src={foto.url_temporal} 
+                          <img
+                            src={foto.url_temporal}
                             alt={`Evidencia ${index + 1}`}
                             loading="lazy"
                             onError={(e) => {
@@ -390,9 +390,9 @@ function AdminSolicitudes() {
                           />
                           <div className="foto-overlay">
                             <span className="foto-numero">#{index + 1}</span>
-                            <a 
-                              href={foto.url_temporal} 
-                              target="_blank" 
+                            <a
+                              href={foto.url_temporal}
+                              target="_blank"
                               rel="noopener noreferrer"
                               className="foto-ver-completa"
                             >
@@ -401,7 +401,7 @@ function AdminSolicitudes() {
                           </div>
                           <div className="foto-error-overlay">
                             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> URL expirada</p>
-                            <button 
+                            <button
                               onClick={(e) => {
                                 e.preventDefault();
                                 recargarFotos();
@@ -416,7 +416,7 @@ function AdminSolicitudes() {
                     </div>
                     <div className="fotos-footer">
                       <p className="fotos-aviso">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-bulb"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" /><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" /><path d="M9.7 17l4.6 0" /></svg> Si las imágenes no cargan, las URLs pueden haber expirado. 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-bulb"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7" /><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3" /><path d="M9.7 17l4.6 0" /></svg> Si las imágenes no cargan, las URLs pueden haber expirado.
                         Click en "Recargar Fotos" para generar nuevas URLs temporales.
                       </p>
                     </div>

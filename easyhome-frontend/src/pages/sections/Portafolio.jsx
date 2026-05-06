@@ -80,13 +80,13 @@ function Portafolio({ idProveedor }) {
         <>
           <div className="galeria-grid">
             {imagenes.map((imagen) => (
-              <div 
-                key={imagen.id_imagen} 
+              <div
+                key={imagen.id_imagen}
                 className="galeria-item"
                 onClick={() => abrirModal(imagen)}
               >
-                <img 
-                  src={imagen.url_imagen} 
+                <img
+                  src={imagen.url_imagen}
                   alt={`Trabajo ${imagen.id_imagen}`}
                   loading="lazy"
                 />
@@ -108,8 +108,8 @@ function Portafolio({ idProveedor }) {
         <div className="modal-overlay" onClick={cerrarModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="btn-cerrar" onClick={cerrarModal}>✕</button>
-            <img 
-              src={imagenSeleccionada.url_imagen} 
+            <img
+              src={imagenSeleccionada.url_imagen}
               alt={`Imagen ${imagenSeleccionada.id_imagen}`}
             />
           </div>
