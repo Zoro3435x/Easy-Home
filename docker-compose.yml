@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: easyhome_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./easyhome-backend
+    container_name: fastapi_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://user_admin:mypassword123@db:5432/my_database
+      - DB_NAME=my_database
+      - DB_USER=user_admin
+      - DB_PASSWORD=mypassword123
+      - SECRET_KEY=una_clave_muy_secreta_aqui
+      - JWT_SECRET_KEY=otra_clave_para_los_tokens
+    depends_on:
+      - db
+
+  frontend:
+    build: ./easyhome-frontend
+    container_name: react_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
