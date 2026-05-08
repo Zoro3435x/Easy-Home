@@ -11,6 +11,11 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build: ./easyhome-backend
@@ -18,14 +23,19 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://user_admin:mypassword123@db:5432/my_database
-      - DB_NAME=my_database
-      - DB_USER=user_admin
-      - DB_PASSWORD=mypassword123
-      - SECRET_KEY=una_clave_muy_secreta_aqui
-      - JWT_SECRET_KEY=otra_clave_para_los_tokens
+      - DATABASE_URL=postgresql://postgres:password@db:5432/easyhome_db
+      - DB_NAME=easyhome_db
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_HOST=db
+      - DB_PORT=5432
+      - SECRET_KEY=una_clave_muy_secreta_aqui_cambiar_en_produccion
+      - JWT_SECRET_KEY=otra_clave_para_los_tokens_cambiar_en_produccion
+      - DEBUG=False
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    command: ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
   frontend:
     build: ./easyhome-frontend

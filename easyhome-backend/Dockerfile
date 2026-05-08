@@ -1,18 +1,30 @@
 # Imagen base de Python
-FROM python:3.12-slim
+FROM python:3.13-slim
 
 # Directorio de trabajo
 WORKDIR /app
 
-# Instalar dependencias del sistema necesarias para psycopg2 (PostgreSQL)
-RUN apt-get update && apt-get install -y libpq-dev gcc && rm -rf /var/lib/apt/lists/*
+# Instalar dependencias del sistema necesarias
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    gcc \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copiar archivos de requerimientos e instalar
+# Copiar archivo de requerimientos
 COPY requirements.txt .
+
+# Instalar dependencias de Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar el resto del código
+# Copiar el código de la aplicación
 COPY . .
 
-# Comando para iniciar FastAPI con Uvicorn
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Crear directorio para uploads
+RUN mkdir -p uploads
+
+# Exponer puerto
+EXPOSE 8000
+
+# Comando para iniciar la aplicación
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

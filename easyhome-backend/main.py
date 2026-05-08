@@ -2,16 +2,34 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from app.core.config import settings, BASE_DIR
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from pathlib import Path
-from app.core.config import settings, BASE_DIR
 from app.api.v1.endpoints import example, auth, categories, solicitud, perfil_proveedor, perfil_usuario, publicacion
+from app.core.database import init_db
+import logging
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="EasyHome Backend API",
     description="API for managing EasyHome smart home devices and services.",
     version="1.0.0"
 )
+
+# ======================================
+# EVENTO DE STARTUP - Inicializar BD
+# ======================================
+@app.on_event("startup")
+def startup_event():
+    """
+    Se ejecuta cuando inicia la aplicación.
+    Crea las tablas de la base de datos si no existen.
+    """
+    try:
+        init_db()
+        logger.info("✅ Database tables initialized successfully on startup")
+    except Exception as e:
+        logger.error(f"❌ Error initializing database: {e}")
+        # No interrumpimos el startup si falla, esto permite debugging
 
 # Servir archivos subidos localmente (simula el comportamiento de S3)
 app.mount(

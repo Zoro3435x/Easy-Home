@@ -4,17 +4,37 @@ Database configuration and session management
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy.pool import StaticPool
 from typing import Generator, AsyncGenerator
 from app.core.config import settings
 
+# Determine if we're using SQLite (for testing or local development)
+is_sqlite = "sqlite" in settings.database_url
+
 # Synchronous database engine
-engine = create_engine(
-    settings.database_url,
-    pool_pre_ping=True,  # Verify connections before using them
-    echo=settings.DEBUG,  # Log SQL queries in debug mode
-    pool_size=10,  # Maximum number of connections to keep in the pool
-    max_overflow=20,  # Maximum number of connections that can be created beyond pool_size
-)
+# SQLite doesn't support pool_size and max_overflow parameters
+if is_sqlite:
+    from sqlalchemy import event
+    engine = create_engine(
+        settings.database_url,
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+        echo=settings.DEBUG,
+    )
+    # Enable foreign keys in SQLite
+    @event.listens_for(engine, "connect")
+    def set_sqlite_pragma(dbapi_conn, connection_record):
+        cursor = dbapi_conn.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
+else:
+    engine = create_engine(
+        settings.database_url,
+        pool_pre_ping=True,  # Verify connections before using them
+        echo=settings.DEBUG,  # Log SQL queries in debug mode
+        pool_size=10,  # Maximum number of connections to keep in the pool
+        max_overflow=20,  # Maximum number of connections that can be created beyond pool_size
+    )
 
 # Synchronous session factory
 SessionLocal = sessionmaker(
@@ -24,22 +44,26 @@ SessionLocal = sessionmaker(
 )
 
 # Asynchronous database engine (for async operations)
-async_engine = create_async_engine(
-    settings.async_database_url,
-    pool_pre_ping=True,
-    echo=settings.DEBUG,
-    pool_size=10,
-    max_overflow=20,
-)
-
-# Asynchronous session factory
-AsyncSessionLocal = async_sessionmaker(
-    async_engine,
-    class_=AsyncSession,
-    autocommit=False,
-    autoflush=False,
-    expire_on_commit=False,
-)
+# Note: Async SQLite is not recommended, but for testing we use the sync version
+if is_sqlite:
+    async_engine = None  # SQLite is sync-only for practical purposes
+    AsyncSessionLocal = None  # Not available for SQLite
+else:
+    async_engine = create_async_engine(
+        settings.async_database_url,
+        pool_pre_ping=True,
+        echo=settings.DEBUG,
+        pool_size=10,
+        max_overflow=20,
+    )
+    # Asynchronous session factory
+    AsyncSessionLocal = async_sessionmaker(
+        async_engine,
+        class_=AsyncSession,
+        autocommit=False,
+        autoflush=False,
+        expire_on_commit=False,
+    )
 
 
 def get_db() -> Generator[Session, None, None]:
