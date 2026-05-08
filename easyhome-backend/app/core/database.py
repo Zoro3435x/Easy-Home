@@ -131,6 +131,17 @@ def init_db():
     
     Base.metadata.create_all(bind=engine)
     print("✅ Database tables created successfully!")
+    
+    # Seed synthetic data
+    from app.scripts.seed_data import seed_database
+    db = SessionLocal()
+    try:
+        seed_database(db)
+        print("✅ Database seeded with synthetic data!")
+    except Exception as e:
+        print(f"❌ Error seeding database: {e}")
+    finally:
+        db.close()
 
 
 async def init_async_db():

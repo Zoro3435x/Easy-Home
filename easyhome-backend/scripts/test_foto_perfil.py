@@ -61,25 +61,22 @@ def test_get_profile_photo():
         print(f"Error: {response.json()}")
         print("❌ Test FALLIDO")
     
+    assert response.status_code == 200
     return response.status_code == 200
 
 
 def test_delete_profile_photo():
     """Prueba eliminar la foto de perfil"""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("🧪 TEST 3: Eliminar foto de perfil")
-    print("="*60)
-    
+    print("=" * 60)
+
     response = client.delete("/api/v1/usuarios/1/foto-perfil")
-    
+
     print(f"Status Code: {response.status_code}")
     print(f"Response: {response.json()}")
-    
-    if response.status_code == 200:
-        print("✅ Test PASADO")
-    else:
-        print("❌ Test FALLIDO")
-    
+
+    assert response.status_code == 200
     return response.status_code == 200
 
 
@@ -100,11 +97,7 @@ def test_invalid_file_type():
     print(f"Status Code: {response.status_code}")
     print(f"Response: {response.json()}")
     
-    if response.status_code == 400:
-        print("✅ Test PASADO (rechazó correctamente el archivo)")
-    else:
-        print("❌ Test FALLIDO (debería rechazar archivos no válidos)")
-    
+    assert response.status_code == 400
     return response.status_code == 400
 
 
@@ -125,11 +118,7 @@ def test_file_too_large():
     print(f"Status Code: {response.status_code}")
     print(f"Response: {response.json()}")
     
-    if response.status_code == 400:
-        print("✅ Test PASADO (rechazó archivo muy grande)")
-    else:
-        print("❌ Test FALLIDO (debería rechazar archivos grandes)")
-    
+    assert response.status_code == 400
     return response.status_code == 400
 
 
@@ -149,11 +138,7 @@ def test_nonexistent_user():
     print(f"Status Code: {response.status_code}")
     print(f"Response: {response.json()}")
     
-    if response.status_code == 404:
-        print("✅ Test PASADO (usuario no encontrado)")
-    else:
-        print("❌ Test FALLIDO (debería retornar 404)")
-    
+    assert response.status_code == 404
     return response.status_code == 404
 
 
