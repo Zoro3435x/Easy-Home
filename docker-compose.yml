@@ -10,6 +10,8 @@ services:
       # SQLite para datos sintéticos (sin PostgreSQL)
       - DATABASE_URL=sqlite:////app/data/easyhome.db
       - DB_NAME=easyhome
+      - DB_USER=easyhome_user
+      - DB_PASSWORD=easyhome_password
       - SECRET_KEY=una_clave_muy_secreta_aqui_cambiar_en_produccion
       - JWT_SECRET_KEY=otra_clave_para_los_tokens_cambiar_en_produccion
       - DEBUG=True
