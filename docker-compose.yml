@@ -1,40 +1,22 @@
-services:
-  db:
-    image: postgres:15-alpine
-    container_name: postgres_db
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: easyhome_db
-    ports:
-      - "5432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+version: '3.8'
 
+services:
   backend:
     build: ./easyhome-backend
     container_name: fastapi_backend
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=postgresql://postgres:password@db:5432/easyhome_db
-      - DB_NAME=easyhome_db
-      - DB_USER=postgres
-      - DB_PASSWORD=password
-      - DB_HOST=db
-      - DB_PORT=5432
+      # SQLite para datos sintéticos (sin PostgreSQL)
+      - DATABASE_URL=sqlite:////app/data/easyhome.db
+      - DB_NAME=easyhome
       - SECRET_KEY=una_clave_muy_secreta_aqui_cambiar_en_produccion
       - JWT_SECRET_KEY=otra_clave_para_los_tokens_cambiar_en_produccion
-      - DEBUG=False
-    depends_on:
-      db:
-        condition: service_healthy
+      - DEBUG=True
+      - AWS_REGION=us-east-1
+    volumes:
+      # Persiste los datos en un volumen de Docker
+      - backend_data:/app/data
     command: ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
   frontend:
@@ -46,4 +28,4 @@ services:
       - backend
 
 volumes:
-  db_data:
+  backend_data:
